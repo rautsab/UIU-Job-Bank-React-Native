@@ -16,6 +16,8 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   JobViews: undefined; // Corrected screen name
+  JobSingleView: undefined; // Corrected screen name
+
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

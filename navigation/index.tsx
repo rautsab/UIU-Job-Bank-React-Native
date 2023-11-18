@@ -14,6 +14,9 @@ import Welcome from "../screens/WelcomeScreen";
 
 import { RootStackParamList } from "../types";
 import JobViews from "../screens/JobInformationScreen";
+import JobSingleDetails from "../screens/JobSingleDetails";
+import JobDetailsScreen from "../screens/JobSingleDetails";
+import JobViewsScreen from "../screens/JobInformationScreen";
 
 const theme = {
   ...DefaultTheme,
@@ -47,7 +50,8 @@ function RootNavigator() {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="JobViews" component={JobViews} />
+      <Stack.Screen name="JobViews" component={JobViewsScreen} />
+      <Stack.Screen name="JobSingleView" component={JobDetailsScreen} />
     </Stack.Navigator>
   );
 }

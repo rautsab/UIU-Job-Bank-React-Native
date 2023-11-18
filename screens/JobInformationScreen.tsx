@@ -1,5 +1,6 @@
 import React from 'react';
-import { FlatList, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
 
 const data = [
     {
@@ -19,7 +20,7 @@ const data = [
         image: 'https://example.com/image2.jpg',
     },
     {
-        id: '1',
+        id: '3',
         title: 'Software Engineer',
         company: 'Google',
         location: 'Mountain View, CA',
@@ -27,7 +28,7 @@ const data = [
         image: 'https://example.com/image.jpg',
     },
     {
-        id: '2',
+        id: '4',
         title: 'Product Manager',
         company: 'Facebook',
         location: 'Menlo Park, CA',
@@ -35,7 +36,7 @@ const data = [
         image: 'https://example.com/image2.jpg',
     },
     {
-        id: '1',
+        id: '5',
         title: 'Software Engineer',
         company: 'Google',
         location: 'Mountain View, CA',
@@ -43,7 +44,7 @@ const data = [
         image: 'https://example.com/image.jpg',
     },
     {
-        id: '2',
+        id: '6',
         title: 'Product Manager',
         company: 'Facebook',
         location: 'Menlo Park, CA',
@@ -51,7 +52,7 @@ const data = [
         image: 'https://example.com/image2.jpg',
     },
     {
-        id: '1',
+        id: '7',
         title: 'Software Engineer',
         company: 'Google',
         location: 'Mountain View, CA',
@@ -59,7 +60,7 @@ const data = [
         image: 'https://example.com/image.jpg',
     },
     {
-        id: '2',
+        id: '8',
         title: 'Product Manager',
         company: 'Facebook',
         location: 'Menlo Park, CA',
@@ -69,19 +70,26 @@ const data = [
     // Add more job data as needed
 ];
 
-const JobCard = ({ job, onPress }) => (
-    <TouchableOpacity onPress={onPress} style={styles.card}>
-        <Image source={require('../assets/images/uiujbc.png')} style={styles.image} />
-        {/*<Image source={job.image ? { uri: job.image } : require('../assets/images/uiujbc.png')} style={styles.image} />*/}
-        <View style={styles.textContainer}>
-            <Text style={styles.title}>{job.title}</Text>
-            <Text style={styles.company}>{job.company}</Text>
-            <Text style={styles.location}>{job.location}</Text>
-            <Text style={styles.status}>{job.status}</Text>
-        </View>
-    </TouchableOpacity>
-);
+const JobCard = ({ job }) => {
+    const navigation = useNavigation();
 
+    const handlePress = () => {
+        console.log(`Pressed job with id: ${job.id}`);
+        navigation.navigate("JobSingleView");
+    };
+
+    return (
+        <TouchableOpacity onPress={handlePress} style={styles.card}>
+            <Image source={require('../assets/images/uiujbc.png')} style={styles.image} />
+            <View style={styles.textContainer}>
+                <Text style={styles.title}>{job.title}</Text>
+                <Text style={styles.company}>{job.company}</Text>
+                <Text style={styles.location}>{job.location}</Text>
+                <Text style={styles.status}>{job.status}</Text>
+            </View>
+        </TouchableOpacity>
+    );
+};
 const JobViews = () => {
     const renderItem = ({ item }) => <JobCard job={item} onPress={() => handlePress(item.id)} />;
 
@@ -91,18 +99,21 @@ const JobViews = () => {
     };
 
     return (
-        <FlatList
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.flatListContent}
-        />
+        <View style={styles.container}>
+            <Text style={styles.pageTitle}>Job Listings</Text>
+            <FlatList
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={styles.flatListContent}
+            />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     flatListContent: {
-        paddingVertical: 50,
+        paddingVertical: 0,
     },
     card: {
         flexDirection: 'row',
@@ -141,6 +152,15 @@ const styles = StyleSheet.create({
     status: {
         fontSize: 14,
         color: 'green',
+    },
+    container: {
+        flex: 1,
+    },
+    pageTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginLeft: 16,
+        marginTop: 50,
     },
 });
 
