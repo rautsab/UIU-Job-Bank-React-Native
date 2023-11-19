@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import {black} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import {useNavigation} from "@react-navigation/native";
+import {AuthContext} from "../../context/AuthContext";
 
 const ProfilePage = () => {
+    const navigation = useNavigation(); // Initialize navigation
+    const { updateLoginState } = useContext(AuthContext);
+
     const handleEditProfile = () => {
         // Logic for handling edit profile
     };
@@ -12,14 +16,16 @@ const ProfilePage = () => {
     };
 
     const handleLogout = () => {
-        // Logic for handling logout
+        updateLoginState(false).then(r => {
+            alert("You have successfully logged out");
+        });
     };
 
-    function view_applied() {
+    function viewApplied() {
 
     }
 
-    function view_posted() {
+    function viewPosted() {
 
     }
 
@@ -28,7 +34,6 @@ const ProfilePage = () => {
             <View style={styles.profileHeader}>
                 <View style={styles.profileImageContainer}>
                     <Image source={require('../../assets/images/profile.jpg')} style={styles.profileImage}/>
-
                 </View>
                 <View style={styles.infoCard}>
                     <Text style={styles.infoText}>Applied Jobs: 10</Text>
@@ -36,11 +41,11 @@ const ProfilePage = () => {
                     <Text style={styles.infoText}>Posted Jobs: 5</Text>
                 </View>
                 <View style={styles.infoCard}>
-                <TouchableOpacity onPress={handleEditProfile} style={styles.viewJobButton}>
+                <TouchableOpacity onPress={viewApplied} style={styles.viewJobButton}>
                     <Text style={styles.buttonText}>View Applied Jobs</Text>
                 </TouchableOpacity>
                     <Text style={styles.separator}></Text>
-                    <TouchableOpacity onPress={handleSettings} style={styles.appliedJobButton}>
+                    <TouchableOpacity onPress={viewPosted} style={styles.appliedJobButton}>
                     <Text style={styles.buttonText}>View Posted Jobs</Text>
                 </TouchableOpacity>
                 </View>

@@ -106,6 +106,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RootStackParamList } from "../types/types";
 import JobPostingForm from "../screens/Post/PostJobScreen";
 import ProfilePage from "../screens/Profile/Profile";
+import {AuthContext} from "../context/AuthContext";
+import {useContext} from "react";
 
 const theme = {
     ...DefaultTheme,
@@ -207,7 +209,7 @@ function RootNavigator() {
 
 export default function Navigation() {
     // Replace 'isLoggedIn' with your actual login state logic
-    const isLoggedIn = false;
+    const { isLoggedIn } = useContext(AuthContext);
 
     return (
         <NavigationContainer theme={theme}>

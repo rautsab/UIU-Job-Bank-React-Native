@@ -6,7 +6,8 @@ import Font from "../../constants/Font";
 import Colors from "../../constants/Colors";
 import FontSize from "../../constants/FontSize";
 import Spacing from "../../constants/Spacing";
-import {useNavigation} from "@react-navigation/native"; // Import your CustomTextInput component
+import {useNavigation} from "@react-navigation/native";
+import {exp} from "@gorhom/bottom-sheet/lib/typescript/utilities/easingExp"; // Import your CustomTextInput component
 
 const JobPostingForm = () => {
     const navigation = useNavigation();
@@ -16,10 +17,30 @@ const JobPostingForm = () => {
     };
     const [jobTitle, setJobTitle] = useState('');
     const [companyTitle, setCompanyTitle] = useState('');
+    const [location, setLocation] = useState('');
+    const [status, setStatus] = useState('');
+    const [salary, setSalary] = useState('');
+    const [vacancy, setVacancy] = useState('');
+    const [experience, setExperience] = useState('');
+    const [gender, setGender] = useState('');
+    const [skills, setSkills] = useState('');
+    const [deadline, setDeadline] = useState('');
+    const [academic, setAcademic] = useState('');
+    const [responsibilities, setResponsibilities] = useState('');
+    const [description, setDescription] = useState('');
+
 
     function update_job() {
         console.log(jobTitle);
         console.log(companyTitle);
+        console.log(location);
+        console.log(status);
+        console.log(salary);
+        console.log(vacancy);
+        console.log(experience);
+        console.log(gender);
+        console.log(skills);
+        console.log(deadline);
     }
 
     return (
@@ -45,7 +66,7 @@ const JobPostingForm = () => {
             </Text>
             <AppTextInput
                 placeholder="Company Title"
-                value={jobTitle}
+                value={companyTitle}
                 onChangeText={(text) => setCompanyTitle(text)}
             />
             <Text style={styles.text}>
@@ -53,64 +74,64 @@ const JobPostingForm = () => {
             </Text>
             <AppTextInput
                 placeholder="Company Location"
-                value={jobTitle}
-                onChangeText={(text) => setJobTitle(text)}
+                value={location}
+                onChangeText={(text) => setLocation(text)}
             />
             <Text style={styles.text}>
                 Employment Status
             </Text>
             <AppTextInput
                 placeholder="Employment Status"
-                value={jobTitle}
-                onChangeText={(text) => setCompanyTitle(text)}
+                value={status}
+                onChangeText={(text) => setStatus(text)}
             />
             <Text style={styles.text}>
                 Salary
             </Text>
             <AppTextInput
                 placeholder="Salary"
-                value={jobTitle}
-                onChangeText={(text) => setJobTitle(text)}
+                value={salary}
+                onChangeText={(text) => setSalary(text)}
             />
             <Text style={styles.text}>
                 Vacancy
             </Text>
             <AppTextInput
                 placeholder="Vacancy"
-                value={jobTitle}
-                onChangeText={(text) => setCompanyTitle(text)}
+                value={vacancy}
+                onChangeText={(text) => setVacancy(text)}
             />
             <Text style={styles.text}>
                 Experience
             </Text>
             <AppTextInput
                 placeholder="Experience"
-                value={jobTitle}
-                onChangeText={(text) => setJobTitle(text)}
+                value={experience}
+                onChangeText={(text) => setExperience(text)}
             />
             <Text style={styles.text}>
                 Gender
             </Text>
             <AppTextInput
                 placeholder="Gender"
-                value={jobTitle}
-                onChangeText={(text) => setCompanyTitle(text)}
+                value={gender}
+                onChangeText={(text) => setGender(text)}
             />
             <Text style={styles.text}>
                 Skills
             </Text>
             <AppTextInput
                 placeholder="Skills"
-                value={jobTitle}
-                onChangeText={(text) => setJobTitle(text)}
+                value={skills}
+                onChangeText={(text) => setSkills(text)}
             />
             <Text style={styles.text}>
                 Deadline
             </Text>
             <AppTextInput
                 placeholder="Deadline"
-                value={jobTitle}
-                onChangeText={(text) => setJobTitle(text)}
+                value={deadline}
+                onChangeText={(text) => setDeadline(text)}
             />
             <TouchableOpacity
                 style={styles.signInButton}

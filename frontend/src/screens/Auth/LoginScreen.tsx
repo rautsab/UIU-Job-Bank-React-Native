@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {
     SafeAreaView,
     StyleSheet,
@@ -17,12 +17,14 @@ import Font from "../../constants/Font";
 import AppTextInput from "../../components/AppTextInput";
 import axios from 'axios';
 import {Alert} from 'react-native';
+import {AuthContext} from "../../context/AuthContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
 const LoginScreen: React.FC<Props> = ({navigation: {navigate}}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { updateLoginState } = useContext(AuthContext);
 
     // const axios = require('axios');
 
@@ -30,7 +32,9 @@ const LoginScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             console.log('Email:', email);
             console.log('Password:', password);
             if (email === "a" && password === "a") {
-                navigate("JobTabs");
+                updateLoginState(true).then(r => {
+                    navigate("JobTabs");
+                });
             } else {
                 console.log('Invalid login information');
             }
