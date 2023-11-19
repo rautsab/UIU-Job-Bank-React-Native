@@ -1,7 +1,13 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Modal} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
 
 const JobDetailsScreen = ({ route }: { route: any }) => {
+    const navigation = useNavigation();
+
+    const profile = () => {
+        navigation.navigate("Profile");
+    };
     const jobDetails = {
         image_url: 'https://example.com/image.jpg',
         job_title: 'Software Engineer',
@@ -29,16 +35,24 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
         vacancy: 5,
         experience: '3+ years',
         job_salary: '$100,000 - $120,000',
+        skills: 'C++, Java, Python',
         gender: 'Any',
         deadline: 'November 30, 2023',
     };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.pageTitle}>Job Information</Text>
+            <View style={styles.headerContainer}>
+                <TouchableOpacity style={styles.headerText}>
+                    <Text style={styles.pageTitle}>Job Information</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.headerText} onPress={profile}>
+                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon} />
+                </TouchableOpacity>
+            </View>
             <View style={styles.header}>
                 <View style={styles.imageContainer}>
-                    <Image source={require('../assets/images/uiujbc.png')} style={styles.image} />
+                    <Image source={require('../../assets/images/uiujbc.png')} style={styles.image} />
                 </View>
                 <View style={styles.jobInfo}>
                     <Text style={styles.jobTitle}>{jobDetails.job_title}</Text>
@@ -64,12 +78,13 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
                 <View style={styles.summaryList}>
                     <Text><Text style={styles.boldText}>Published on:</Text> {jobDetails.published_date}</Text>
                     <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.vacancy}</Text>
-                    <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.employment_status}</Text>
-                    <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.experience}</Text>
-                    <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.job_location}</Text>
-                    <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.job_salary}</Text>
-                    <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.gender}</Text>
-                    <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.deadline}</Text>
+                    <Text><Text style={styles.boldText}>Employment Status:</Text> {jobDetails.employment_status}</Text>
+                    <Text><Text style={styles.boldText}>Experience:</Text> {jobDetails.experience}</Text>
+                    <Text><Text style={styles.boldText}>Location:</Text> {jobDetails.job_location}</Text>
+                    <Text><Text style={styles.boldText}>Salary:</Text> {jobDetails.job_salary}</Text>
+                    <Text><Text style={styles.boldText}>Gender:</Text> {jobDetails.gender}</Text>
+                    <Text><Text style={styles.boldText}>Skills:</Text> {jobDetails.skills}</Text>
+                    <Text><Text style={styles.boldText}>Deadline:</Text> {jobDetails.deadline}</Text>
                     {/* Include other job summary details similarly */}
                 </View>
             </View>
@@ -99,12 +114,12 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
                 <Text style={styles.shareHeader}>Share</Text>
                 <View style={styles.shareIcons}>
                     <TouchableOpacity style={styles.shareIcon}>
-                        <Image source={require('../assets/icons/facebook.png')} style={styles.icon} />
+                        <Image source={require('../../assets/icons/facebook.png')} style={styles.icon} />
 
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.shareIcon}>
-                        <Image source={require('../assets/icons/twitter.png')} style={styles.icon} />
+                        <Image source={require('../../assets/icons/twitter.png')} style={styles.icon} />
 
                     </TouchableOpacity>
                 </View>
@@ -219,11 +234,41 @@ const styles = StyleSheet.create({
     }, icon: {
         width: 30, // Adjust the width and height according to your icon size
         height: 30,
+    }, circularButton: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        paddingVertical: 10,
+        borderRadius: 25,
+    }, modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    }, headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+        borderRadius: 0,
+    }, headerText: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        paddingVertical: 10,
+        borderRadius: 25,
+    }, circularIcon: {
+        width: 40, // Adjust the width and height according to your icon size
+        height: 40,
+        borderRadius: 30,
     }, pageTitle: {
-        fontSize: 24,
+        fontSize: 25,
         fontWeight: 'bold',
         marginLeft: 0,
-        marginTop: 0,
+        marginTop: 10,
         marginBottom: 10
     },
 });

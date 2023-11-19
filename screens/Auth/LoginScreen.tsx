@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {RootStackParamList} from "../types";
-import Spacing from "../constants/Spacing";
-import FontSize from "../constants/FontSize";
-import Colors from "../constants/Colors";
-import Font from "../constants/Font";
-import AppTextInput from "../components/AppTextInput";
+import {RootStackParamList} from "../../types/types";
+import Spacing from "../../constants/Spacing";
+import FontSize from "../../constants/FontSize";
+import Colors from "../../constants/Colors";
+import Font from "../../constants/Font";
+import AppTextInput from "../../components/AppTextInput";
 import axios from 'axios';
 import {Alert} from 'react-native';
 
@@ -30,7 +30,7 @@ const LoginScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             console.log('Email:', email);
             console.log('Password:', password);
             if (email === "a" && password === "a") {
-                navigate("JobViews");
+                navigate("JobTabs");
             } else {
                 console.log('Invalid login information');
             }

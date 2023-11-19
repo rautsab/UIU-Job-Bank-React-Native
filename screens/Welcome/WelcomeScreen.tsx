@@ -8,12 +8,12 @@ import {
     View,
 } from "react-native";
 import React from "react";
-import Spacing from "../constants/Spacing";
-import FontSize from "../constants/FontSize";
-import Colors from "../constants/Colors";
-import Font from "../constants/Font";
+import Spacing from "../../constants/Spacing";
+import FontSize from "../../constants/FontSize";
+import Colors from "../../constants/Colors";
+import Font from "../../constants/Font";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../../types/types";
 const { height } = Dimensions.get("window");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Welcome">;
@@ -27,7 +27,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
                         height: height / 2.5,
                     }}
                     resizeMode="contain"
-                    source={require("../assets/images/uiujbc.png")}
+                    source={require("../../assets/images/uiujbc.png")}
                 />
                 <View
                     style={{

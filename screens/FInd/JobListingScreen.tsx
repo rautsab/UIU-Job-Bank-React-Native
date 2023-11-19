@@ -67,10 +67,18 @@ const data = [
         status: 'Full Time',
         image: 'https://example.com/image2.jpg',
     },
-    // Add more job data as needed
 ];
 
-const JobCard = ({ job }) => {
+// { route }: { route: any }
+// const JobCard = ({job}: { job: any }) => {
+
+interface JobCardProps {
+    job: any; // Adjust 'any' to the specific type of job object you're using
+    onPress: () => void;
+    // Other props related to JobCard, if any
+}
+
+const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
     const navigation = useNavigation();
 
     const handlePress = () => {
@@ -80,7 +88,7 @@ const JobCard = ({ job }) => {
 
     return (
         <TouchableOpacity onPress={handlePress} style={styles.card}>
-            <Image source={require('../assets/images/uiujbc.png')} style={styles.image} />
+            <Image source={require('../../assets/images/uiujbc.png')} style={styles.image}/>
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{job.title}</Text>
                 <Text style={styles.company}>{job.company}</Text>
@@ -91,16 +99,28 @@ const JobCard = ({ job }) => {
     );
 };
 const JobViews = () => {
-    const renderItem = ({ item }) => <JobCard job={item} onPress={() => handlePress(item.id)} />;
+    const navigation = useNavigation();
+    const renderItem = ({item}: { item: any }) => <JobCard job={item} onPress={() => handlePress(item.id)}/>;
 
-    const handlePress = (id) => {
+    const handlePress = (id: any) => {
         // Handle press, e.g., navigate to job details screen
         console.log(`Pressed job with id: ${id}`);
     };
 
+    function profile() {
+        navigation.navigate("Profile");
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.pageTitle}>Job Listings</Text>
+            <View style={styles.headerContainer}>
+                <TouchableOpacity style={styles.headerText}>
+                    <Text style={styles.pageTitle}>Job Information</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.headerText} onPress={profile}>
+                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
+                </TouchableOpacity>
+            </View>
             <FlatList
                 data={data}
                 renderItem={renderItem}
@@ -122,7 +142,7 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
         borderRadius: 8,
         marginVertical: 8,
-        marginHorizontal: 16,
+        marginHorizontal: 0,
         padding: 12,
     },
     image: {
@@ -154,13 +174,34 @@ const styles = StyleSheet.create({
         color: 'green',
     },
     container: {
-        flex: 1,
-    },
-    pageTitle: {
-        fontSize: 24,
+        paddingTop: 50,
+        flexGrow: 1,
+        padding: 10,
+        backgroundColor: '#ffffff',
+    }, headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+        borderRadius: 0,
+    }, headerText: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        paddingVertical: 10,
+        borderRadius: 0,
+    }, circularIcon: {
+        width: 40, // Adjust the width and height according to your icon size
+        height: 40,
+        borderRadius: 30,
+    }, pageTitle: {
+        fontSize: 25,
         fontWeight: 'bold',
-        marginLeft: 16,
-        marginTop: 50,
+        marginLeft: 0,
+        marginTop: 10,
+        marginBottom: 10
     },
 });
 
