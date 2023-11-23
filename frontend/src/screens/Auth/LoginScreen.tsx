@@ -28,17 +28,15 @@ const LoginScreen: React.FC<Props> = ({navigation: {navigate}}) => {
 
     // const axios = require('axios');
 
-    const checkProfile = () => {
-            console.log('Email:', email);
-            console.log('Password:', password);
-            if (email === "a" && password === "a") {
-                updateLoginState(true).then(r => {
-                    navigate("JobTabs");
-                });
-            } else {
-                console.log('Invalid login information');
-            }
+    const checkProfile = async () => {
+        console.log('Email:', email);
+        console.log('Password:', password);
+        if (email === "rutsab222063@bscse.uiu.ac.bd" && password === "12345678") {
+            await updateLoginState(true, 'rutsab222063@bscse.uiu.ac.bd', 'Redwan Ahmed Utsab');
+        } else {
+            alert('Invalid login information');
         }
+    }
 
 
         return (

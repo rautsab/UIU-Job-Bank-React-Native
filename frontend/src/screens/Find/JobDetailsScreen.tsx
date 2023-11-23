@@ -6,7 +6,7 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
     const navigation = useNavigation();
 
     const profile = () => {
-        navigation.navigate("Profile");
+        navigation.navigate("Listing");
     };
     const jobDetails = {
         image_url: 'https://example.com/image.jpg',

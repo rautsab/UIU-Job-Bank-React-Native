@@ -9,136 +9,81 @@ import Spacing from "../../constants/Spacing";
 import {useNavigation} from "@react-navigation/native";
 import {exp} from "@gorhom/bottom-sheet/lib/typescript/utilities/easingExp"; // Import your CustomTextInput component
 
-const JobPostingForm = () => {
+const EditProfile = () => {
     const navigation = useNavigation();
 
     const profile = () => {
         navigation.navigate("Posting");
     };
-    const [jobTitle, setJobTitle] = useState('');
-    const [companyTitle, setCompanyTitle] = useState('');
-    const [location, setLocation] = useState('');
-    const [status, setStatus] = useState('');
-    const [salary, setSalary] = useState('');
-    const [vacancy, setVacancy] = useState('');
-    const [experience, setExperience] = useState('');
-    const [gender, setGender] = useState('');
-    const [skills, setSkills] = useState('');
-    const [deadline, setDeadline] = useState('');
-    const [academic, setAcademic] = useState('');
-    const [responsibilities, setResponsibilities] = useState('');
-    const [description, setDescription] = useState('');
-
+    const [firstname, setFirstName] = useState('Redwan Ahmed');
+    const [lastname, setLastName] = useState('Utsab');
+    const [email, setEmail] = useState('rutsab222063@bscse.uiu.ac.bd');
+    const [password, setPassword] = useState('12345678');
+    const [retypePassword, setRetypePassword] = useState('12345678');
 
     function update_job() {
-        console.log(jobTitle);
-        console.log(companyTitle);
-        console.log(location);
-        console.log(status);
-        console.log(salary);
-        console.log(vacancy);
-        console.log(experience);
-        console.log(gender);
-        console.log(skills);
-        console.log(deadline);
+
     }
 
     return (
         <ScrollView style={styles.container}>
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.headerText}>
-                    <Text style={styles.pageTitle}>Job Post</Text>
+                    <Text style={styles.pageTitle}>Edit Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
                     <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
             <Text style={styles.text}>
-                Job Title
+                Firstname
             </Text>
             <AppTextInput
-                placeholder="Job Title"
-                value={jobTitle}
-                onChangeText={(text) => setJobTitle(text)}
+                placeholder="Firstname"
+                value={firstname}
+                onChangeText={(text) => setFirstName(text)}
             />
             <Text style={styles.text}>
-                Company Title
+                Lastname
             </Text>
             <AppTextInput
-                placeholder="Company Title"
-                value={companyTitle}
-                onChangeText={(text) => setCompanyTitle(text)}
+                placeholder="Lastname"
+                value={lastname}
+                onChangeText={(text) => setLastName(text)}
             />
             <Text style={styles.text}>
-                Company Location
+                Email
             </Text>
             <AppTextInput
-                placeholder="Company Location"
-                value={location}
-                onChangeText={(text) => setLocation(text)}
+                placeholder="Email"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
             />
             <Text style={styles.text}>
-                Employment Status
+                Password
             </Text>
             <AppTextInput
-                placeholder="Employment Status"
-                value={status}
-                onChangeText={(text) => setStatus(text)}
+                placeholder="Password"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
             />
             <Text style={styles.text}>
-                Salary
+                Retype Password
             </Text>
             <AppTextInput
-                placeholder="Salary"
-                value={salary}
-                onChangeText={(text) => setSalary(text)}
+                placeholder="Retype Password"
+                value={retypePassword}
+                onChangeText={(text) => setRetypePassword(text)}
+                secureTextEntry={true}
             />
-            <Text style={styles.text}>
-                Vacancy
-            </Text>
-            <AppTextInput
-                placeholder="Vacancy"
-                value={vacancy}
-                onChangeText={(text) => setVacancy(text)}
-            />
-            <Text style={styles.text}>
-                Experience
-            </Text>
-            <AppTextInput
-                placeholder="Experience"
-                value={experience}
-                onChangeText={(text) => setExperience(text)}
-            />
-            <Text style={styles.text}>
-                Gender
-            </Text>
-            <AppTextInput
-                placeholder="Gender"
-                value={gender}
-                onChangeText={(text) => setGender(text)}
-            />
-            <Text style={styles.text}>
-                Skills
-            </Text>
-            <AppTextInput
-                placeholder="Skills"
-                value={skills}
-                onChangeText={(text) => setSkills(text)}
-            />
-            <Text style={styles.text}>
-                Deadline
-            </Text>
-            <AppTextInput
-                placeholder="Deadline"
-                value={deadline}
-                onChangeText={(text) => setDeadline(text)}
-            />
+
             <TouchableOpacity
                 style={styles.signInButton}
                 onPress={update_job}
             >
                 <Text style={styles.signInText}>
-                    Post Job
+                    Save
                 </Text>
             </TouchableOpacity>
         </ScrollView>
@@ -200,4 +145,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default JobPostingForm;
+export default EditProfile;

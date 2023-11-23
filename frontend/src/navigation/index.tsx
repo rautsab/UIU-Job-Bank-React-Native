@@ -99,8 +99,8 @@ import Colors from "../constants/Colors";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
 import Welcome from "../screens/Welcome/WelcomeScreen";
-import JobDetailsScreen from "../screens/FInd/JobDetailsScreen";
-import JobViewsScreen from "../screens/FInd/JobListingScreen";
+import JobDetailsScreen from "../screens/Find/JobDetailsScreen";
+import JobViewsScreen from "../screens/Find/JobListingScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { RootStackParamList } from "../types/types";
@@ -108,6 +108,10 @@ import JobPostingForm from "../screens/Post/PostJobScreen";
 import ProfilePage from "../screens/Profile/Profile";
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
+import AppliedScreen from "../screens/Profile/Applied";
+import PostedScreen from "../screens/Profile/Posted";
+import EditScreen from "../screens/Profile/Edit";
+import SettingsScreen from "../screens/Profile/Settings";
 
 const theme = {
     ...DefaultTheme,
@@ -129,11 +133,26 @@ function Job_Find_Nav() {
         >
             <Stack.Screen name="JobViews" component={JobViewsScreen} />
             <Stack.Screen name="JobSingleView" component={JobDetailsScreen} />
-            <Stack.Screen name="Profile" component={ProfilePage} />
+            <Stack.Screen name="Listing" component={Profile} />
         </Stack.Navigator>
     );
 }
 
+function Profile() {
+        return (
+            <Stack.Navigator
+                screenOptions={{
+                    headerShown: false,
+                }}
+            >
+                <Stack.Screen name="Profile" component={ProfilePage} />
+                <Stack.Screen name="Applied" component={AppliedScreen} />
+                <Stack.Screen name="Posted" component={PostedScreen} />
+                <Stack.Screen name="EditProfile" component={EditScreen} />
+                <Stack.Screen name="Settings" component={SettingsScreen} />
+            </Stack.Navigator>
+        );
+}
 function Job_Post_Nav() {
     return (
         <Stack.Navigator
@@ -142,6 +161,7 @@ function Job_Post_Nav() {
             }}
         >
             <Stack.Screen name="JobPostForm" component={JobPostingForm} />
+            <Stack.Screen name="Posting" component={Profile} />
         </Stack.Navigator>
     );
 }
@@ -200,7 +220,7 @@ function RootNavigator() {
                 name="JobTabs"
                 component={JobTabs}
                 options={{
-                    gestureEnabled: false, // Disable gestures for going back
+                    gestureEnabled: false,
                 }}
             />
         </Stack.Navigator>
@@ -208,7 +228,6 @@ function RootNavigator() {
 }
 
 export default function Navigation() {
-    // Replace 'isLoggedIn' with your actual login state logic
     const { isLoggedIn } = useContext(AuthContext);
 
     return (
