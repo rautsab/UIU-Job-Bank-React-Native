@@ -8,26 +8,35 @@ const ProfilePage = () => {
     const { updateLoginState } = useContext(AuthContext);
 
     const handleEditProfile = () => {
-        // Logic for handling edit profile
+        navigation.navigate("EditProfile");
     };
 
     const handleSettings = () => {
-        // Logic for handling settings
+        navigation.navigate("Settings");
     };
 
-    const handleLogout = () => {
-        updateLoginState(false).then(r => {
-            alert("You have successfully logged out");
+    const handleLogout = async () => {
+        await updateLoginState(false, "", "").then(r => {
+
         });
+        // updateLoginState(false).then(r => {
+            alert("You have successfully logged out");
+        // });
     };
 
     function viewApplied() {
+        navigation.navigate("Applied");
 
     }
 
     function viewPosted() {
+        navigation.navigate("Posted");
 
     }
+
+    const { userEmail } = useContext(AuthContext);
+    const { userName } = useContext(AuthContext);
+
 
     return (
         <View style={styles.container}>
@@ -35,6 +44,12 @@ const ProfilePage = () => {
                 <View style={styles.profileImageContainer}>
                     <Image source={require('../../assets/images/profile.jpg')} style={styles.profileImage}/>
                 </View>
+                <TouchableOpacity style={styles.headerText}>
+                    <Text style={styles.pageTitle}>{userName}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.headerSubText}>
+                    <Text style={styles.pageSubTitle}>{userEmail}</Text>
+                </TouchableOpacity>
                 <View style={styles.infoCard}>
                     <Text style={styles.infoText}>Applied Jobs: 10</Text>
                     <Text style={styles.separator}></Text>
@@ -64,11 +79,6 @@ const ProfilePage = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-
-            {/* Card for applied and posted jobs */}
-
-
-            {/* Logout button */}
 
         </View>
     );
@@ -136,14 +146,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     infoCard: {
-        marginTop:10,
+        marginTop:5,
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#ddd',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 5,
         width: 350,
     },
     infoText: {
@@ -161,6 +171,31 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#ccc',
         marginVertical: 10,
+    }, headerText: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        paddingVertical: 10,
+        borderRadius: 0,
+    }, headerSubText: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+        borderRadius: 0,
+    }, pageTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 0,
+        marginTop: 0,
+        marginBottom: 0
+    }, pageSubTitle: {
+        fontSize: 15,
+        marginLeft: 0,
+        marginTop: 0,
+        marginBottom: 5
     }
 });
 

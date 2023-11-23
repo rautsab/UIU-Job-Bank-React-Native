@@ -21,52 +21,12 @@ const data = [
     },
     {
         id: '3',
-        title: 'Software Engineer',
+        title: 'AI Developer',
         company: 'Google',
         location: 'Mountain View, CA',
         status: 'Full Time',
         image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '4',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '5',
-        title: 'Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '6',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '7',
-        title: 'Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '8',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
+    }
 ];
 
 // { route }: { route: any }
@@ -98,7 +58,7 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
         </TouchableOpacity>
     );
 };
-const JobViews = () => {
+const PostedScreen = () => {
     const navigation = useNavigation();
     const renderItem = ({item}: { item: any }) => <JobCard job={item} onPress={() => handlePress(item.id)}/>;
 
@@ -108,14 +68,14 @@ const JobViews = () => {
     };
 
     function profile() {
-        navigation.navigate("Profile");
+        navigation.navigate("Listing");
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.headerText}>
-                    <Text style={styles.pageTitle}>Job Information</Text>
+                    <Text style={styles.pageTitle}>Posted Jobs</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
                     <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
@@ -205,4 +165,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default JobViews;
+export default PostedScreen;
