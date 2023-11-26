@@ -27,41 +27,21 @@ const LoginScreen: React.FC<Props> = ({navigation: {navigate}}) => {
     const [password, setPassword] = useState('');
     const {updateLoginState} = useContext(AuthContext);
 
-    // const checkProfile = async () => {
-    //     console.log('Email:', email);
-    //     console.log('Password:', password);
-    //     axios.post('http://192.168.0.179:3000/user/login', {
-    //         // Replace the object with the data you want to send in the POST request
-    //         email: 'rutsab222063@bscse.uiu.ac.bd',
-    //         password: '123456784"',
-    //     })
-    //         .then(async (response) => {
-    //             if (response.data == true) {
-    //                 console.log('POST request was successful!', response.data);
-    //                 await updateLoginState(true, 'rutsab222063@bscse.uiu.ac.bd', 'Redwan Ahmed Utsab');
-    //             } else {
-    //                 console.log('POST decline!', response.data);
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error making POST request:', error);
-    //             alert('Invalid login information');
-    //         });
-    // }
-
     const checkProfile = async () => {
         console.log('Email:', email);
         console.log('Password:', password);
         axios.post('http://192.168.0.179:3000/user/login', {
-            // Replace the object with the data you want to send in the POST request
-            // email: 'rutsab222063@bscse.uiu.ac.bd',
             email: email.toString(),
             password: password.toString(),
         })
             .then((response) => {
                 if (response.data == true) {
                     console.log('POST request was successful!', response.data);
-                    updateLoginState(true, 'rutsab222063@bscse.uiu.ac.bd', 'Redwan Ahmed Utsab');
+                    axios.get('http://192.168.0.179:3000/user/get/'+email).then(res => {
+                        console.log(response.data);
+                        console.log(res.data);
+                        updateLoginState(true, email, res.data);
+                    })
                 } else {
                     console.log('POST decline!', response.data);
                 }
