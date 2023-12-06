@@ -33,4 +33,16 @@ export class CvService {
 
         return true;
     }
+
+    async getSingleInfo(email: string) {
+        try {
+            const jobs = await this.cvRepository.findOne({ where: { email } });
+            console.log(jobs);
+            return jobs; // Return the jobs data
+        } catch (error) {
+            console.error('Error occurred while fetching single info:', error);
+            return null; // Return null or handle the error as needed
+        }
+    }
+
 }

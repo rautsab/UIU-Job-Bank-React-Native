@@ -16,7 +16,10 @@ const ProfilePage = () => {
     };
 
     const handleSettings = () => {
-        navigation.navigate("ViewCV");
+        axios.get('http://192.168.0.179:3000/cv/' + userEmail).then(res => {
+            if (res.data != true) alert("You have already created a CV");
+            else navigation.navigate("ViewCV");
+        })
     };
 
     const handleLogout = async () => {
@@ -38,7 +41,6 @@ const ProfilePage = () => {
     const [data, setJobData] = useState([]);
 
     useEffect(() => {
-        // Fetch job data from the backend when the component mounts
         axios.get('http://192.168.0.179:3000/jobs')
             .then(response => {
                 setJobData(response.data); // Assuming the response.data is an array of jobs

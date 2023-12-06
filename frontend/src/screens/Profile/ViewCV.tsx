@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {View, StyleSheet, Text, TouchableOpacity, ScrollView} from 'react-native';
 import AppTextInput from '../../components/AppTextInput';
 import Font from '../../constants/Font';
 import Colors from '../../constants/Colors';
 import FontSize from '../../constants/FontSize';
 import Spacing from '../../constants/Spacing';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import axios from "axios/index";
+import {AuthContext} from "../../context/AuthContext";
 
 const ViewCV = () => {
     const navigation = useNavigation();
@@ -14,22 +16,40 @@ const ViewCV = () => {
         navigation.navigate('Posting');
     };
 
-    const [firstname, setFirstName] = useState('Redwan Ahmed');
-    const [lastname, setLastName] = useState('Utsab');
-    const [email, setEmail] = useState('rutsab222063@bscse.uiu.ac.bd');
-    const [phone, setPhone] = useState('+123456789');
-    const [address, setAddress] = useState('123, ABC Street, XYZ City');
-    const [summary, setSummary] = useState(
-        'Experienced professional with a strong background in web development.'
-    );
-    const [education, setEducation] = useState(
-        'Bachelor of Science in Computer Science and Engineering, UIU'
-    );
-    const [experience, setExperience] = useState(
-        'Software Developer at Company XYZ (2019 - Present)'
-    );
-    const [skills, setSkills] = useState('React Native, JavaScript, HTML, CSS');
-    const [languages, setLanguages] = useState('English (Fluent), Spanish (Intermediate)');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
+    const [summary, setSummary] = useState('');
+    const [education, setEducation] = useState(['']);
+    const [experience, setExperience] = useState([''])
+    const [skills, setSkills] = useState(['']);
+    const [languages, setLanguages] = useState(['']);
+
+    const {userEmail} = useContext(AuthContext);
+
+
+    useEffect(() => {
+        axios.get(`http://192.168.0.179:3000/cv/email/${userEmail}`)
+            .then(response => {
+                const {data} = response;
+                setFirstName(data.firstname);
+                setLastName(data.lastname);
+                setEmail(data.email);
+                setPhone(data.phone);
+                setAddress(data.address);
+                setSummary(data.summary);
+                setEducation(data.education);
+                setExperience(data.experience);
+                setSkills(data.skills);
+                setLanguages(data.languages);
+            })
+            .catch(error => {
+                // Handle error
+                console.error('Error fetching CV data:', error);
+            });
+    }, []);
 
     function update_job() {
         // Logic to update profile
@@ -39,11 +59,10 @@ const ViewCV = () => {
         <ScrollView style={styles.container}>
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.headerText}>
-                    <Text style={styles.pageTitle}>Edit Profile</Text>
+                    <Text style={styles.pageTitle}>Curriculum Vitae</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    {/* Replace with your profile image */}
-                    <View style={styles.circularIcon} />
+                    <View style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
             <View style={styles.cvSection}>
@@ -59,23 +78,40 @@ const ViewCV = () => {
             </View>
             <View style={styles.cvSection}>
                 <Text style={styles.cvSectionTitle}>Education</Text>
-                <Text style={styles.cvItem}>{education}</Text>
+                {education.map((edu, index) => (
+                    <Text key={index} style={styles.cvItem}>
+                        {edu}
+                    </Text>
+                ))}
             </View>
             <View style={styles.cvSection}>
                 <Text style={styles.cvSectionTitle}>Experience</Text>
-                <Text style={styles.cvItem}>{experience}</Text>
+                {experience.map((exp, index) => (
+                    <Text key={index} style={styles.cvItem}>
+                        {exp}
+                    </Text>
+                ))}
             </View>
             <View style={styles.cvSection}>
                 <Text style={styles.cvSectionTitle}>Skills</Text>
-                <Text style={styles.cvItem}>{skills}</Text>
+                {skills.map((skill, index) => (
+                    <Text key={index} style={styles.cvItem}>
+                        {skill}
+                    </Text>
+                ))}
             </View>
             <View style={styles.cvSection}>
                 <Text style={styles.cvSectionTitle}>Languages</Text>
-                <Text style={styles.cvItem}>{languages}</Text>
+                {languages.map((lang, index) => (
+                    <Text key={index} style={styles.cvItem}>
+                        {lang}
+                    </Text>
+                ))}
             </View>
 
-            <TouchableOpacity style={styles.saveButton} onPress={update_job}>
-                <Text style={styles.saveButtonText}>Save</Text>
+
+            <TouchableOpacity style={styles.deleteButton} onPress={update_job}>
+                <Text style={styles.deleteButtonText}>Delete</Text>
             </TouchableOpacity>
         </ScrollView>
     );
@@ -86,14 +122,13 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20,
         paddingTop: 50,
+        backgroundColor: '#FFFFFF',
     },
     headerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 0,
-        paddingVertical: 0,
-        borderRadius: 0,
+        marginBottom: 20,
     },
     headerText: {
         flexDirection: 'row',
@@ -112,40 +147,46 @@ const styles = StyleSheet.create({
     pageTitle: {
         fontSize: 25,
         fontWeight: 'bold',
-        marginLeft: 0,
-        marginTop: 10,
+        color: '#333333', // Header color
         marginBottom: 10,
     },
     cvSection: {
         marginBottom: 20,
+        borderWidth: 1,
+        borderColor: '#CCCCCC', // Border color
+        padding: 15,
+        borderRadius: 10,
     },
     cvSectionTitle: {
-        fontSize: FontSize.large,
+        fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: '#007bff', // Section title color
     },
     cvItem: {
-        fontSize: FontSize.medium,
+        fontSize: 16,
         marginBottom: 5,
+        color: '#444444', // Content color
     },
-    saveButton: {
-        padding: Spacing * 2,
-        backgroundColor: Colors.primary,
-        marginVertical: Spacing * 3,
-        borderRadius: Spacing,
-        shadowColor: Colors.primary,
+    deleteButton: {
+        padding: 20,
+        backgroundColor: 'red',
+        marginVertical: 20,
+        borderRadius: 8,
+        shadowColor: '#000000', // Shadow color
         shadowOffset: {
             width: 0,
-            height: Spacing,
+            height: 2,
         },
         shadowOpacity: 0.3,
-        shadowRadius: Spacing,
+        shadowRadius: 3,
+        marginBottom:70
     },
-    saveButtonText: {
-        fontFamily: Font['poppins-bold'],
-        color: Colors.onPrimary,
+    deleteButtonText: {
+        fontFamily: 'Arial',
+        color: '#FFFFFF',
         textAlign: 'center',
-        fontSize: FontSize.large,
+        fontSize:20
     },
 });
 

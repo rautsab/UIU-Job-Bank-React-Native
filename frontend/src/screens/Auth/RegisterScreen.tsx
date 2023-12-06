@@ -16,6 +16,7 @@ import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
 import AppTextInput from "../../components/AppTextInput";
 import axios from "axios/index";
+import {useNavigation} from "@react-navigation/native";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Register">;
 
@@ -26,6 +27,7 @@ const RegisterScreen: React.FC<Props> = ({navigation: {navigate}}) => {
     const [isValidEmail, setIsValidEmail] = useState(true);
 
 
+    const navigation = useNavigation();
     const signUpCheck = () => {
         console.log(name.toString());
         console.log(email.toString());
@@ -37,7 +39,7 @@ const RegisterScreen: React.FC<Props> = ({navigation: {navigate}}) => {
         })
             .then((response) => {
                 if (response.data == true) {
-                    console.log("account created successfully");
+                    alert("Account created successfully");
                 } else {
                     console.log('POST decline!', response.data);
                 }
