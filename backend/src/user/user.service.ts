@@ -1,14 +1,11 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {CreateUserDTO, UserCredentialDTO} from '../dto/user.dto';
 import {Users} from "../../models/user.models";
-import {Repository} from "typeorm";
+import {getRepository, Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 
 @Injectable()
 export class UserService {
-    private readonly email: string = 'rutsab222063@bscse.uiu.ac.bd';
-    private readonly password: string = '12345678';
-
     constructor(
         @InjectRepository(Users) private readonly userRepository: Repository<Users>,
     ) {
@@ -17,8 +14,7 @@ export class UserService {
     async userAuth(userCredential: UserCredentialDTO): Promise<boolean> {
         try {
             const user = await this.getUser(userCredential.email, userCredential.password);
-
-            if (user && user.firstname && user.lastname) {
+            if (user && user.name) {
                 return true;
             } else {
                 return false;
@@ -44,10 +40,25 @@ export class UserService {
     }
 
 
-    async createUser(createUserDTO: CreateUserDTO) {
-        const result = this.userRepository.insert(createUserDTO);
-        return result;
+    async createUser(createUserDTO: CreateUserDTO): Promise<boolean> {
+        try {
+            console.log(createUserDTO.name);
+            console.log(createUserDTO.email);
+            console.log(createUserDTO.password);
+            const users = this.userRepository.create(createUserDTO);
+            const result = this.userRepository.save(users);
+
+            if (result) {
+                return true; // Success indication
+            } else {
+                return false; // Failure indication
+            }
+        } catch (error) {
+            console.error('Error creating user:', error);
+            return false; // Return a failure indication in case of an error
+        }
     }
+
 
     async getUserByEmail(email: string): Promise<Users | undefined> {
         try {
@@ -62,8 +73,8 @@ export class UserService {
         try {
             const user = await this.getUserByEmail(userCredentialDTO.email);
 
-            if (user && user.firstname && user.lastname) {
-                return user.firstname + ' ' + user.lastname;
+            if (user && user.name) {
+                return user.name;
             } else {
                 return null;
             }
@@ -76,7 +87,7 @@ export class UserService {
     async find(email: string) {
         try {
             const user = await this.userRepository.findOne({where: {email}});
-            return user.firstname + " " + user.lastname;
+            return user.name;
         } catch (error) {
             throw new NotFoundException('User not found');
         }

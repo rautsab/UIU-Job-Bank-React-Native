@@ -4,7 +4,9 @@ import {AppService} from './app.service';
 import {UserModule} from './user/user.module';
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
-import DatabaseConnection from './database/connection'
+import { AccountsModule } from './accounts/accounts.module';
+import { JobsModule } from './jobs/jobs.module';
+import DatabaseConnection from './database/connection';
 
 @Module({
     imports: [
@@ -15,6 +17,8 @@ import DatabaseConnection from './database/connection'
             useFactory: DatabaseConnection,
             inject: [ConfigService],
         }),
+        AccountsModule,
+        JobsModule,
     ],
     controllers: [AppController],
     providers: [AppService],

@@ -6,7 +6,7 @@ export class UserCredentialDTO {
         name: 'email',
         description: "User's Email",
         type: String,
-        example: 'dev@company.com',
+        example: 'abc@bscse.uiu.ac.bd',
     })
     readonly email: string;
 
@@ -14,7 +14,7 @@ export class UserCredentialDTO {
         name: 'password',
         description: "User's Password",
         type: String,
-        example: 'abcsergfoeirngoi',
+        example: '12345678',
     })
     readonly password: string;
 }
@@ -22,35 +22,26 @@ export class UserCredentialDTO {
 
 export class CreateUserDTO {
     @ApiProperty({
-        name: 'firstname',
-        description: "User's Firstname",
+        name: 'name',
+        description: "Name",
         type: String,
-        example: 'Redwan Ahmed',
+        example: 'Mr. ABC',
     })
     @IsString()
-    readonly firstname: string;
-
-    @ApiProperty({
-        name: 'lastname',
-        description: "User's Lastname",
-        type: String,
-        example: 'Utsab',
-    })
-    @IsString()
-    readonly lastname: string;
+    readonly name: string;
 
     @ApiProperty({
         name: 'email',
-        description: "User's Email",
+        description: "Email",
         type: String,
-        example: 'dev@company.com',
+        example: 'abc@bscse.uiu.ac.bd',
     })
     @IsString()
     readonly email: string;
 
     @ApiProperty({
         name: 'password',
-        description: "User's Password",
+        description: "Password",
         type: String,
         example: '12345678',
     })
