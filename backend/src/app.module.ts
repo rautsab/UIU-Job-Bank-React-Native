@@ -24,8 +24,8 @@ import DatabaseConnection from './database/connection';
         JobsModule,
         CvModule,
     ],
-    controllers: [AppController, CvController],
-    providers: [AppService, CvService],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {
 }
