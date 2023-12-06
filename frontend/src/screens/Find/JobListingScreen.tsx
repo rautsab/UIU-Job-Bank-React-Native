@@ -1,73 +1,74 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
+import axios from "axios/index";
 
-const data = [
-    {
-        id: '1',
-        title: 'Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '2',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '3',
-        title: 'AI Developer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '4',
-        title: 'Machine Learning Engineer',
-        company: 'Microsoft',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '5',
-        title: 'Senior Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '6',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '7',
-        title: 'Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '8',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-];
+// const data = [
+//     {
+//         id: '1',
+//         title: 'Software Engineer',
+//         company: 'Google',
+//         location: 'Mountain View, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image.jpg',
+//     },
+//     {
+//         id: '2',
+//         title: 'Product Manager',
+//         company: 'Facebook',
+//         location: 'Menlo Park, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image2.jpg',
+//     },
+//     {
+//         id: '3',
+//         title: 'AI Developer',
+//         company: 'Google',
+//         location: 'Mountain View, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image.jpg',
+//     },
+//     {
+//         id: '4',
+//         title: 'Machine Learning Engineer',
+//         company: 'Microsoft',
+//         location: 'Menlo Park, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image2.jpg',
+//     },
+//     {
+//         id: '5',
+//         title: 'Senior Software Engineer',
+//         company: 'Google',
+//         location: 'Mountain View, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image.jpg',
+//     },
+//     {
+//         id: '6',
+//         title: 'Product Manager',
+//         company: 'Facebook',
+//         location: 'Menlo Park, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image2.jpg',
+//     },
+//     {
+//         id: '7',
+//         title: 'Software Engineer',
+//         company: 'Google',
+//         location: 'Mountain View, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image.jpg',
+//     },
+//     {
+//         id: '8',
+//         title: 'Product Manager',
+//         company: 'Facebook',
+//         location: 'Menlo Park, CA',
+//         status: 'Full Time',
+//         image: 'https://example.com/image2.jpg',
+//     },
+// ];
 
 // { route }: { route: any }
 // const JobCard = ({job}: { job: any }) => {
@@ -82,16 +83,17 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
     const navigation = useNavigation();
 
     const handlePress = () => {
-        console.log(`Pressed job with id: ${job.id}`);
-        navigation.navigate("JobSingleView");
+        let jobId = job.id;
+        console.log(`Pressed job with id: `+ jobId);
+        navigation.navigate("JobSingleView", {jobId});
     };
 
     return (
         <TouchableOpacity onPress={handlePress} style={styles.card}>
             <Image source={require('../../assets/images/uiujbc.png')} style={styles.image}/>
             <View style={styles.textContainer}>
-                <Text style={styles.title}>{job.title}</Text>
-                <Text style={styles.company}>{job.company}</Text>
+                <Text style={styles.title}>{job.jobTitle}</Text>
+                <Text style={styles.company}>{job.companyTitle}</Text>
                 <Text style={styles.location}>{job.location}</Text>
                 <Text style={styles.status}>{job.status}</Text>
             </View>
@@ -100,6 +102,18 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 };
 const JobViews = () => {
     const navigation = useNavigation();
+    const [data, setJobData] = useState([]);
+
+    useEffect(() => {
+        // Fetch job data from the backend when the component mounts
+        axios.get('http://192.168.0.179:3000/jobs')
+            .then(response => {
+                setJobData(response.data); // Assuming the response.data is an array of jobs
+            })
+            .catch(error => {
+                console.error('Error fetching job data:', error);
+            });
+    }, []); // Empty dependen
     const renderItem = ({item}: { item: any }) => <JobCard job={item} onPress={() => handlePress(item.id)}/>;
 
     const handlePress = (id: any) => {

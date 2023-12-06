@@ -30,14 +30,14 @@ const LoginScreen: React.FC<Props> = ({navigation: {navigate}}) => {
     const checkProfile = async () => {
         console.log('Email:', email);
         console.log('Password:', password);
-        axios.post('http://10.10.248.193:3000/user/login', {
+        axios.post('http://192.168.0.179:3000/user/login', {
             email: email.toString(),
             password: password.toString(),
         })
             .then((response) => {
                 if (response.data == true) {
                     console.log('POST request was successful!', response.data);
-                    axios.get('http://10.10.248.193:3000/user/get/' + email).then(res => {
+                    axios.get('http://192.168.0.179:3000/user/get/' + email).then(res => {
                         console.log(response.data);
                         console.log(res.data);
                         updateLoginState(true, email.toString(), res.data.toString());

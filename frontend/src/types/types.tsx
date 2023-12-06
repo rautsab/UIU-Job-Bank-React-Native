@@ -16,7 +16,7 @@ export type RootStackParamList = {
 
     //find job
     JobViews: undefined;
-    JobSingleView: undefined;
+    JobSingleView: { jobId: string };
 
     //post job
     JobPostForm: undefined;

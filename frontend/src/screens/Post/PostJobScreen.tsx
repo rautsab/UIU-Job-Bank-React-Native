@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import CustomTextInput from '../../components/AppTextInput';
 import AppTextInput from "../../components/AppTextInput";
@@ -7,7 +7,8 @@ import Colors from "../../constants/Colors";
 import FontSize from "../../constants/FontSize";
 import Spacing from "../../constants/Spacing";
 import {useNavigation} from "@react-navigation/native";
-import {exp} from "@gorhom/bottom-sheet/lib/typescript/utilities/easingExp"; // Import your CustomTextInput component
+import {exp} from "@gorhom/bottom-sheet/lib/typescript/utilities/easingExp";
+import axios from "axios/index"; // Import your CustomTextInput component
 
 const JobPostingForm = () => {
     const navigation = useNavigation();
@@ -31,16 +32,31 @@ const JobPostingForm = () => {
 
 
     function update_job() {
-        console.log(jobTitle);
-        console.log(companyTitle);
-        console.log(location);
-        console.log(status);
-        console.log(salary);
-        console.log(vacancy);
-        console.log(experience);
-        console.log(gender);
-        console.log(skills);
-        console.log(deadline);
+        axios.post('http://192.168.0.179:3000/jobs/insert', {
+            jobTitle: jobTitle,
+            companyTitle: companyTitle,
+            location: location,
+            status: status,
+            salary: salary,
+            vacancy: vacancy,
+            experience: experience,
+            gender: gender,
+            skills: skills,
+            deadline: deadline,
+            academic: academic,
+            responsibilities: responsibilities,
+            description: description
+        })
+            .then((response) => {
+                if (response.data == true) {
+                    console.log('', response.data);
+                } else {
+                    console.log('POST decline!', response.data);
+                }
+            })
+            .catch((error) => {
+                console.error('Error making POST request:', error);
+            });
     }
 
     return (
@@ -133,6 +149,29 @@ const JobPostingForm = () => {
                 value={deadline}
                 onChangeText={(text) => setDeadline(text)}
             />
+            <Text style={styles.text}>
+                Academic
+            </Text>
+            <AppTextInput
+                placeholder="Academic"
+                value={academic}
+                onChangeText={(text) => setAcademic(text)}
+            />
+            <Text style={styles.text}>
+                Responsibilities </Text>
+            <AppTextInput
+                placeholder="Responsibilities"
+                value={responsibilities}
+                onChangeText={(text) => setResponsibilities(text)}
+            />
+            <Text style={styles.text}>
+                Description
+            </Text>
+            <AppTextInput
+                placeholder="Description"
+                value={description}
+                onChangeText={(text) => setDescription(text)}
+            />
             <TouchableOpacity
                 style={styles.signInButton}
                 onPress={update_job}
@@ -179,7 +218,7 @@ const styles = StyleSheet.create({
         marginLeft: 0,
         marginTop: 10,
         marginBottom: 10
-    },  signInButton: {
+    }, signInButton: {
         padding: Spacing * 2,
         backgroundColor: Colors.primary,
         marginVertical: Spacing * 3,

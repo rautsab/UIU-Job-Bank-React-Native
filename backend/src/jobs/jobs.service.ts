@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Jobs} from "../../models/job.model";
 import {Repository} from "typeorm";
@@ -13,10 +13,13 @@ export class JobService {
     }
 
 
-    async getSingle(id: number) {
-        console.log(id);
-        return Promise.resolve(undefined);
+    async getSingle(id: number): Promise<Jobs> {
+        const job = await this.jobsRepository.findOne({where: {id}});
+        if (!job) {
+            throw new NotFoundException(`Job with ID ${id} not found`);
+        }
 
+        return job;
     }
 
     async insert(jobDTO: JobDTO) {
@@ -26,7 +29,7 @@ export class JobService {
 
             console.log(jobDTO.jobTitle);
 
-            if(result) return true;
+            if (result) return true;
             else return false;
         } catch (error) {
             console.error('Error occurred while inserting job:', error);
@@ -34,5 +37,15 @@ export class JobService {
         }
     }
 
+
+    async getAll(): Promise<any[]> {
+        try {
+            const jobs = await this.jobsRepository.find();
+            return jobs; // Return the array of jobs
+        } catch (error) {
+            console.error('Error occurred while fetching all jobs:', error);
+            return []; // Return an empty array in case of an error
+        }
+    }
 
 }

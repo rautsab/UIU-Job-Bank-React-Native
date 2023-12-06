@@ -12,6 +12,11 @@ export class JobsController {
         return await this.jobService.getSingle(id);
     }
 
+    @Get() // Assuming you're fetching all jobs
+    async getAllJobs(): Promise<any[]> {
+        return await this.jobService.getAll();
+    }
+
     @Post('insert') // Assuming you're fetching a user by ID
     insertJob(@Body() jobDTO : JobDTO): any {
         return this.jobService.insert(jobDTO);
