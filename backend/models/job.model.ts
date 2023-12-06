@@ -43,4 +43,10 @@ export class Jobs {
 
     @Column('varchar', {length: 255, name: 'description', nullable: false})
     readonly description: string;
+
+    @Column('date', { name: 'published_date', default: () => 'CURRENT_DATE' })
+    readonly published_date: Date;
+
+    @Column('varchar', { length: 255, name: 'author_email', nullable: false })
+    readonly author_email: string;
 }

@@ -13,5 +13,7 @@ CREATE TABLE jobs
     "deadline"         VARCHAR(255) NOT NULL,
     "academic"         VARCHAR(255) NOT NULL,
     "responsibilities" VARCHAR(255) NOT NULL,
-    "description"      VARCHAR(255) NOT NULL
+    "description"      VARCHAR(255) NOT NULL,
+    "published_date"   DATE DEFAULT CURRENT_DATE,
+    "author_email"     VARCHAR(255);
 );

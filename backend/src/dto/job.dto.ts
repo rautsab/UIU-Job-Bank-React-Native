@@ -105,4 +105,33 @@ export class JobDTO {
         example: 'We are looking for a skilled Software Engineer...',
     })
     readonly description: string;
+
+    @ApiProperty({
+        name: 'published_date',
+        description: "Job's Published Date",
+        type: String,
+        example: '2025-12-06',
+    })
+    readonly published_date: string;
+
+    constructor(data: Partial<JobDTO>) {
+        Object.assign(this, data);
+
+        // Set the current date in the 'publishedDate' property if it's not provided
+        if (!this.published_date) {
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            this.published_date = `${year}-${month}-${day}`;
+        }
+    }
+
+    @ApiProperty({
+        name: 'author_email',
+        description: "Author Email",
+        type: String,
+        example: 'abc@email.com',
+    })
+    readonly author_email: string;
 }

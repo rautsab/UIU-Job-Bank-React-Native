@@ -110,8 +110,8 @@ import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
 import AppliedScreen from "../screens/Profile/Applied";
 import PostedScreen from "../screens/Profile/Posted";
-import EditScreen from "../screens/Profile/Edit";
-import SettingsScreen from "../screens/Profile/Settings";
+import ViewCV from "../screens/Profile/ViewCV";
+import AddCV from "../screens/Profile/AddCV";
 
 const theme = {
     ...DefaultTheme,
@@ -148,8 +148,8 @@ function Profile() {
                 <Stack.Screen name="Profile" component={ProfilePage} />
                 <Stack.Screen name="Applied" component={AppliedScreen} />
                 <Stack.Screen name="Posted" component={PostedScreen} />
-                <Stack.Screen name="EditProfile" component={EditScreen} />
-                <Stack.Screen name="Settings" component={SettingsScreen} />
+                <Stack.Screen name="AddCV" component={AddCV} />
+                <Stack.Screen name="ViewCV" component={ViewCV} />
             </Stack.Navigator>
         );
 }

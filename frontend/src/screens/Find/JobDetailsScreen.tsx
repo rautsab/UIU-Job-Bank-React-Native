@@ -32,42 +32,6 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
         return <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />;
     }
 
-
-    // console.log(check.jobTitle);
-
-
-    // const jobDetails = {
-    //     image_url: 'https://example.com/image.jpg',
-    //     job_title: 'Software Engineer',
-    //     company_title: 'Google',
-    //     job_location: 'Mountain View, CA',
-    //     employment_status: 'Full Time',
-    //     description: '“We Power the Magic!” That’s our motto at Disney Parks, Experiences and Products Technology & Digital. Our team creates world-class immersive digital experiences for the Company’s premier vacation brands including Disney’s Parks & Resorts worldwide, Disney Cruise Line, Aulani, A Disney Resort & Spa, and Disney Vacation Club.\n' +
-    //         '\n' +
-    //         'We are responsible for the end-to-end digital and physical Guest experience for all technology & digital-led initiatives across the Attractions & Entertainment, Food & Beverage, Resorts & Transportation and Merchandise lines of business as well as other initiatives including MyDisneyExperience and Hey, Disney!\n' +
-    //         '\n' +
-    //         'The Software Engineer applies practical knowledge of development and engineering to conceive, design, develop, test, and implement software fixes, improvements, components, and/or new software systems and applications of moderate complexity. The Software Engineer focuses on coding at the component level and works under minimal direction. The Software Engineer designs and develops highly scalable software systems and applications in a designated functional focus area(s).',
-    //     responsibilities: 'Complete assigned component level software development and fixes using new or existing technologies\n' +
-    //         'Participates in developing specifications for assigned components, projects or fixes\n' +
-    //         'Writes code, completes programming, writes tests, performs testing and debugs code\n' +
-    //         'Follows established protocols for installation and maintenance and completes documentation\n' +
-    //         'Develops, runs, builds and maintains the technical components related to server-side and web service-based solutions\n' +
-    //         'Develops an understanding of the front-end technology stack and is able to assist with end-to-end solving\n' +
-    //         'Interacts and coordinates work with other technical groups in the organization\n' +
-    //         'Reviews or solves problems and performs testing\n' +
-    //         'Participates in conceiving and setting the architectural direction for web development projects',
-    //     academic: 'Bachelor’s degree in computer science or similar field or related work experience\n' +
-    //         '3+ years of progressively related experience in coding and development of highly scalable, high-volume software components, and/or client-facing web applications\n' +
-    //         'Knowledge of object-oriented design principles, design patterns, coding standard methodologies, database applications, and web application development',
-    //     published_date: 'October 20, 2023',
-    //     vacancy: 5,
-    //     experience: '3+ years',
-    //     job_salary: '$100,000 - $120,000',
-    //     skills: 'C++, Java, Python',
-    //     gender: 'Any',
-    //     deadline: 'November 30, 2023',
-    // };
-
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.headerContainer}>
@@ -104,7 +68,7 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
             <View style={styles.summaryContainer}>
                 <Text style={styles.summaryHeader}>Job Summary</Text>
                 <View style={styles.summaryList}>
-                    {/*<Text><Text style={styles.boldText}>Published on:</Text> {jobDetails.pub}</Text>*/}
+                    <Text><Text style={styles.boldText}>Published on:</Text> {jobDetails.published_date}</Text>
                     <Text><Text style={styles.boldText}>Vacancy:</Text> {jobDetails.vacancy}</Text>
                     <Text><Text style={styles.boldText}>Employment Status:</Text> {jobDetails.status}</Text>
                     <Text><Text style={styles.boldText}>Experience:</Text> {jobDetails.experience}</Text>

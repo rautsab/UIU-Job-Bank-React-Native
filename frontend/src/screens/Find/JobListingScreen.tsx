@@ -3,76 +3,6 @@ import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button} from 
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios/index";
 
-// const data = [
-//     {
-//         id: '1',
-//         title: 'Software Engineer',
-//         company: 'Google',
-//         location: 'Mountain View, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image.jpg',
-//     },
-//     {
-//         id: '2',
-//         title: 'Product Manager',
-//         company: 'Facebook',
-//         location: 'Menlo Park, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image2.jpg',
-//     },
-//     {
-//         id: '3',
-//         title: 'AI Developer',
-//         company: 'Google',
-//         location: 'Mountain View, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image.jpg',
-//     },
-//     {
-//         id: '4',
-//         title: 'Machine Learning Engineer',
-//         company: 'Microsoft',
-//         location: 'Menlo Park, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image2.jpg',
-//     },
-//     {
-//         id: '5',
-//         title: 'Senior Software Engineer',
-//         company: 'Google',
-//         location: 'Mountain View, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image.jpg',
-//     },
-//     {
-//         id: '6',
-//         title: 'Product Manager',
-//         company: 'Facebook',
-//         location: 'Menlo Park, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image2.jpg',
-//     },
-//     {
-//         id: '7',
-//         title: 'Software Engineer',
-//         company: 'Google',
-//         location: 'Mountain View, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image.jpg',
-//     },
-//     {
-//         id: '8',
-//         title: 'Product Manager',
-//         company: 'Facebook',
-//         location: 'Menlo Park, CA',
-//         status: 'Full Time',
-//         image: 'https://example.com/image2.jpg',
-//     },
-// ];
-
-// { route }: { route: any }
-// const JobCard = ({job}: { job: any }) => {
-
 interface JobCardProps {
     job: any; // Adjust 'any' to the specific type of job object you're using
     onPress: () => void;
@@ -103,6 +33,7 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 const JobViews = () => {
     const navigation = useNavigation();
     const [data, setJobData] = useState([]);
+
 
     useEffect(() => {
         // Fetch job data from the backend when the component mounts

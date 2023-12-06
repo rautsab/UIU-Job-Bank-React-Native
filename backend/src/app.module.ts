@@ -6,6 +6,9 @@ import {ConfigModule, ConfigService} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import { AccountsModule } from './accounts/accounts.module';
 import { JobsModule } from './jobs/jobs.module';
+import { CvController } from './cv/cv.controller';
+import { CvService } from './cv/cv.service';
+import { CvModule } from './cv/cv.module';
 import DatabaseConnection from './database/connection';
 
 @Module({
@@ -19,9 +22,10 @@ import DatabaseConnection from './database/connection';
         }),
         AccountsModule,
         JobsModule,
+        CvModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
+    controllers: [AppController, CvController],
+    providers: [AppService, CvService],
 })
 export class AppModule {
 }

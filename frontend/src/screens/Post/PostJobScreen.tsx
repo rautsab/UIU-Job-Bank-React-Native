@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import CustomTextInput from '../../components/AppTextInput';
 import AppTextInput from "../../components/AppTextInput";
@@ -8,9 +8,12 @@ import FontSize from "../../constants/FontSize";
 import Spacing from "../../constants/Spacing";
 import {useNavigation} from "@react-navigation/native";
 import {exp} from "@gorhom/bottom-sheet/lib/typescript/utilities/easingExp";
-import axios from "axios/index"; // Import your CustomTextInput component
+import axios from "axios/index";
+import {AuthContext} from "../../context/AuthContext"; // Import your CustomTextInput component
 
 const JobPostingForm = () => {
+    const {userEmail} = useContext(AuthContext);
+
     const navigation = useNavigation();
 
     const profile = () => {
@@ -45,7 +48,9 @@ const JobPostingForm = () => {
             deadline: deadline,
             academic: academic,
             responsibilities: responsibilities,
-            description: description
+            description: description,
+            published_date: new Date().toISOString().split('T')[0],
+            author_email: userEmail
         })
             .then((response) => {
                 if (response.data == true) {

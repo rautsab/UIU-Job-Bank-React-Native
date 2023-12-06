@@ -1,18 +1,19 @@
-import React, {useContext} from 'react';
-import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import {AuthContext} from "../../context/AuthContext";
+import axios from "axios";
 
 const ProfilePage = () => {
     const navigation = useNavigation(); // Initialize navigation
-    const { updateLoginState } = useContext(AuthContext);
+    const {updateLoginState} = useContext(AuthContext);
 
     const handleEditProfile = () => {
-        navigation.navigate("EditProfile");
+        navigation.navigate("AddCV");
     };
 
     const handleSettings = () => {
-        navigation.navigate("Settings");
+        navigation.navigate("ViewCV");
     };
 
     const handleLogout = async () => {
@@ -20,7 +21,7 @@ const ProfilePage = () => {
 
         });
         // updateLoginState(false).then(r => {
-            alert("You have successfully logged out");
+        alert("You have successfully logged out");
         // });
     };
 
@@ -34,8 +35,21 @@ const ProfilePage = () => {
 
     }
 
-    const { userEmail } = useContext(AuthContext);
-    const { userName } = useContext(AuthContext);
+    const [data, setJobData] = useState([]);
+
+    useEffect(() => {
+        // Fetch job data from the backend when the component mounts
+        axios.get('http://192.168.0.179:3000/jobs')
+            .then(response => {
+                setJobData(response.data); // Assuming the response.data is an array of jobs
+            })
+            .catch(error => {
+                console.error('Error fetching job data:', error);
+            });
+    }, []); // Empty dependen
+
+    const {userEmail} = useContext(AuthContext);
+    const {userName} = useContext(AuthContext);
 
 
     return (
@@ -51,26 +65,26 @@ const ProfilePage = () => {
                     <Text style={styles.pageSubTitle}>{userEmail}</Text>
                 </TouchableOpacity>
                 <View style={styles.infoCard}>
-                    <Text style={styles.infoText}>Applied Jobs: 10</Text>
+                    <Text style={styles.infoText}>Applied Jobs: 0</Text>
                     <Text style={styles.separator}></Text>
-                    <Text style={styles.infoText}>Posted Jobs: 5</Text>
+                    <Text style={styles.infoText}>Posted Jobs: {data.length}</Text>
                 </View>
                 <View style={styles.infoCard}>
-                <TouchableOpacity onPress={viewApplied} style={styles.viewJobButton}>
-                    <Text style={styles.buttonText}>View Applied Jobs</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={viewApplied} style={styles.viewJobButton}>
+                        <Text style={styles.buttonText}>View Applied Jobs</Text>
+                    </TouchableOpacity>
                     <Text style={styles.separator}></Text>
                     <TouchableOpacity onPress={viewPosted} style={styles.appliedJobButton}>
-                    <Text style={styles.buttonText}>View Posted Jobs</Text>
-                </TouchableOpacity>
+                        <Text style={styles.buttonText}>View Posted Jobs</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.infoCard}>
                     <TouchableOpacity onPress={handleEditProfile} style={styles.editProfileButton}>
-                        <Text style={styles.buttonText}>Edit Profile</Text>
+                        <Text style={styles.buttonText}>Add CV</Text>
                     </TouchableOpacity>
                     <Text style={styles.separator}></Text>
                     <TouchableOpacity onPress={handleSettings} style={styles.settingsButton}>
-                        <Text style={styles.buttonText}>Settings</Text>
+                        <Text style={styles.buttonText}>View CV</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.infoCard}>
@@ -93,7 +107,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     profileHeader: {
-        marginTop:75,
+        marginTop: 75,
         alignItems: 'center',
         marginBottom: 30,
     },
@@ -146,7 +160,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     infoCard: {
-        marginTop:5,
+        marginTop: 5,
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 10,

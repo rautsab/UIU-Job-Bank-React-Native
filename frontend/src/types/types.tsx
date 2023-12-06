@@ -34,8 +34,8 @@ export type RootStackParamList = {
     Profile: undefined;
     Applied: undefined;
     Posted: undefined;
-    EditProfile: undefined;
-    Settings: undefined;
+    AddCV: undefined;
+    ViewCV: undefined;
 
     //function for profile
     Listing: undefined;
