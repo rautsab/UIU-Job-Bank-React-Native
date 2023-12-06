@@ -5,11 +5,14 @@ import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 
 const ProfilePage = () => {
-    const navigation = useNavigation(); // Initialize navigation
+    const navigation = useNavigation();
     const {updateLoginState} = useContext(AuthContext);
 
     const handleEditProfile = () => {
-        navigation.navigate("AddCV");
+        axios.get('http://192.168.0.179:3000/cv/' + userEmail).then(res => {
+            if (res.data == true) alert("You have already created a CV");
+            else navigation.navigate("AddCV");
+        })
     };
 
     const handleSettings = () => {
@@ -18,11 +21,8 @@ const ProfilePage = () => {
 
     const handleLogout = async () => {
         await updateLoginState(false, "", "").then(r => {
-
         });
-        // updateLoginState(false).then(r => {
         alert("You have successfully logged out");
-        // });
     };
 
     function viewApplied() {
@@ -46,7 +46,7 @@ const ProfilePage = () => {
             .catch(error => {
                 console.error('Error fetching job data:', error);
             });
-    }, []); // Empty dependen
+    }, []);
 
     const {userEmail} = useContext(AuthContext);
     const {userName} = useContext(AuthContext);

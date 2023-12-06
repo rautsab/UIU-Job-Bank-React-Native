@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import {CV} from "../../models/cv.model";
@@ -23,5 +23,14 @@ export class CvService {
             console.error('Error occurred while inserting job:', error);
             return false; // Indicating failure due to an error
         }
+    }
+
+    async getSingle(email: string) {
+        const job = await this.cvRepository.findOne({where: {email}});
+        if (!job) {
+            return false;
+        }
+
+        return true;
     }
 }
