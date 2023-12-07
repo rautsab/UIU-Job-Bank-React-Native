@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
 import {JobService} from "./jobs.service";
 import {JobDTO} from "../dto/job.dto";
 
@@ -12,9 +12,14 @@ export class JobsController {
         return await this.jobService.getSingle(id);
     }
 
-    @Get() // Assuming you're fetching all jobs
-    async getAllJobs(): Promise<any[]> {
-        return await this.jobService.getAll();
+    // @Get() // Assuming you're fetching all jobs
+    // async getAllJobs(): Promise<any[]> {
+    //     return await this.jobService.getAll();
+    // }
+
+    @Get('query/:search')
+    async getAllJobs(@Param('search') search: string): Promise<any[]> {
+        return await this.jobService.getAll(search);
     }
 
     @Get('getFiltered/:email') // Assuming you're fetching filtered jobs by email

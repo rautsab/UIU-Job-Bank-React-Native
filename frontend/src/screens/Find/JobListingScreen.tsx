@@ -37,7 +37,7 @@ const JobViews = () => {
 
 
     useEffect(() => {
-        axios.get(`${Config.backendURL}/jobs`)
+        axios.get(`${Config.backendURL}/jobs/query/all`)
             .then(response => {
                 setJobData(response.data); // Assuming the response.data is an array of jobs
             })
@@ -57,15 +57,42 @@ const JobViews = () => {
     }
 
     const [isExpanded, setIsExpanded] = useState(false);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState("");
 
     const toggleSearch = () => {
-        setIsExpanded(!isExpanded);
+        if (isExpanded) {
+            axios.get(`${Config.backendURL}/jobs/query/all`)
+                .then(response => {
+                    setJobData(response.data); // Update job data with the response
+                    setSearchText("");
+                })
+                .catch(error => {
+                    console.error('Error fetching job data:', error);
+                });
+        }
+            setIsExpanded(!isExpanded);
     };
 
     const handleSearch = () => {
-        // Implement your search logic here using the 'searchText' state variable
-        console.log('Searching for:', searchText);
+        if (searchText == "") {
+            axios.get(`${Config.backendURL}/jobs/query/all`)
+                .then(response => {
+                    setJobData(response.data); // Update job data with the response
+                    setSearchText("");
+                })
+                .catch(error => {
+                    console.error('Error fetching job data:', error);
+                });
+        } else {
+            axios.get(`${Config.backendURL}/jobs/query/${searchText}`)
+                .then(response => {
+                    setJobData(response.data); // Update job data with the response
+                    setSearchText("");
+                })
+                .catch(error => {
+                    console.error('Error fetching job data:', error);
+                });
+        }
     };
 
     return (
@@ -75,10 +102,10 @@ const JobViews = () => {
                     <Text style={styles.pageTitle}>Job Information</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.searchIcon} onPress={toggleSearch}>
-                    <Image source={require('../../assets/images/search.png')} style={styles.searchIconImage} />
+                    <Image source={require('../../assets/images/search.png')} style={styles.searchIconImage}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon} />
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
 
@@ -181,7 +208,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     searchIconImage: {
-        marginLeft:100,
+        marginLeft: 100,
         width: 35,
         height: 35,
         resizeMode: 'contain',

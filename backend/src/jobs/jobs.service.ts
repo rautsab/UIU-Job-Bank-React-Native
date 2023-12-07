@@ -1,7 +1,7 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Jobs} from "../../models/job.model";
-import {Repository} from "typeorm";
+import {Like, Repository} from "typeorm";
 import {useDebugValue} from "react";
 import {JobDTO} from "../dto/job.dto";
 
@@ -38,12 +38,35 @@ export class JobService {
     }
 
 
-    async getAll(): Promise<any[]> {
+    // async getAll(): Promise<any[]> {
+    //     try {
+    //         const jobs = await this.jobsRepository.find();
+    //         return jobs; // Return the array of jobs
+    //     } catch (error) {
+    //         console.error('Error occurred while fetching all jobs:', error);
+    //         return []; // Return an empty array in case of an error
+    //     }
+    // }
+
+    async getAll(searchQuery?: string): Promise<any[]> {
+        console.log(searchQuery);
         try {
-            const jobs = await this.jobsRepository.find();
-            return jobs; // Return the array of jobs
+            let jobs;
+
+            if (searchQuery != "all") {
+                jobs = await this.jobsRepository.find({
+                    where: {
+                        jobTitle: Like(`%${searchQuery}%`), // Example: Searching by job title
+                        // Add more criteria as needed for other fields
+                    },
+                });
+            } else {
+                jobs = await this.jobsRepository.find(); // Fetch all jobs if no search query
+            }
+
+            return jobs; // Return the array of filtered jobs or all jobs
         } catch (error) {
-            console.error('Error occurred while fetching all jobs:', error);
+            console.error('Error occurred while fetching jobs:', error);
             return []; // Return an empty array in case of an error
         }
     }
