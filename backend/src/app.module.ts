@@ -9,6 +9,8 @@ import { JobsModule } from './jobs/jobs.module';
 import { CvController } from './cv/cv.controller';
 import { CvService } from './cv/cv.service';
 import { CvModule } from './cv/cv.module';
+import { AppliedService } from './applied/applied.service';
+import { AppliedModule } from './applied/applied.module';
 import DatabaseConnection from './database/connection';
 
 @Module({
@@ -23,6 +25,7 @@ import DatabaseConnection from './database/connection';
         AccountsModule,
         JobsModule,
         CvModule,
+        AppliedModule,
     ],
     controllers: [AppController],
     providers: [AppService],

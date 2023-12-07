@@ -38,10 +38,16 @@ const JobDetailsScreen = ({route}: { route: any }) => {
 
     const handleApplyNow = () => {
         axios.get(`${Config.backendURL}/cv/` + userEmail).then(res => {
-            if (res.data == true) alert("Applied Successfully!");
-            else alert("You have to create a CV info to apply!");
+            if (res.data == true) {
+                axios.post(`${Config.backendURL}/applied/insert`, {
+                    job_id: jobId,
+                    user_email: userEmail,
+                }).then((response) => {
+                    if (response.data == true) alert("Applied Successfully!");
+                    else alert("You have already applied");
+                });
+            } else alert("You have to create a CV info to apply!");
         });
-        console.log("handle apply now");
     }
 
     return (

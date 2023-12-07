@@ -1,52 +1,9 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
-
-const data = [
-    {
-        id: '1',
-        title: 'Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '2',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '3',
-        title: 'AI Developer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '4',
-        title: 'Machine Learning Engineer',
-        company: 'Microsoft',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '5',
-        title: 'Senior Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    }
-];
-
-// { route }: { route: any }
-// const JobCard = ({job}: { job: any }) => {
+import axios from "axios";
+import Config from "../../config/config";
+import {AuthContext} from "../../context/AuthContext";
 
 interface JobCardProps {
     job: any; // Adjust 'any' to the specific type of job object you're using
@@ -59,7 +16,6 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 
     const handlePress = () => {
         console.log(`Pressed job with id: ${job.id}`);
-        navigation.navigate("JobSingleView");
     };
 
     return (
@@ -76,6 +32,21 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 };
 const AppliedScreen = () => {
     const navigation = useNavigation();
+    const [applied, setAppliedData] = useState([]);
+
+    const {userEmail} = useContext(AuthContext);
+
+    useEffect(() => {
+        axios.get(`${Config.backendURL}/applied/getFiltered/` + userEmail)
+            .then(response => {
+                setAppliedData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching job data:', error);
+            });
+    }, []);
+
+    console.log(applied);
     const renderItem = ({item}: { item: any }) => <JobCard job={item} onPress={() => handlePress(item.id)}/>;
 
     const handlePress = (id: any) => {
@@ -98,7 +69,7 @@ const AppliedScreen = () => {
                 </TouchableOpacity>
             </View>
             <FlatList
-                data={data}
+                data={applied}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.flatListContent}

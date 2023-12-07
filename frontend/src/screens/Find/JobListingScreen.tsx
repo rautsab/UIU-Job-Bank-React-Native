@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button} from 'react-native';
+import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button, TextInput} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios/index";
 import Config from "../../config/config";
@@ -37,7 +37,6 @@ const JobViews = () => {
 
 
     useEffect(() => {
-        // Fetch job data from the backend when the component mounts
         axios.get(`${Config.backendURL}/jobs`)
             .then(response => {
                 setJobData(response.data); // Assuming the response.data is an array of jobs
@@ -57,16 +56,45 @@ const JobViews = () => {
         navigation.navigate("Listing");
     }
 
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [searchText, setSearchText] = useState('');
+
+    const toggleSearch = () => {
+        setIsExpanded(!isExpanded);
+    };
+
+    const handleSearch = () => {
+        // Implement your search logic here using the 'searchText' state variable
+        console.log('Searching for:', searchText);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.headerText}>
                     <Text style={styles.pageTitle}>Job Information</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.searchIcon} onPress={toggleSearch}>
+                    <Image source={require('../../assets/images/search.png')} style={styles.searchIconImage} />
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon} />
                 </TouchableOpacity>
             </View>
+
+            {isExpanded && (
+                <View style={styles.expandedSearch}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter your search"
+                        value={searchText}
+                        onChangeText={(text) => setSearchText(text)}
+                    />
+                    <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+                        <Text style={styles.searchButtonText}>Search</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
             <FlatList
                 data={data}
                 renderItem={renderItem}
@@ -148,6 +176,40 @@ const styles = StyleSheet.create({
         marginLeft: 0,
         marginTop: 10,
         marginBottom: 10
+    },
+    searchIcon: {
+        marginRight: 10,
+    },
+    searchIconImage: {
+        marginLeft:100,
+        width: 35,
+        height: 35,
+        resizeMode: 'contain',
+    },
+    expandedSearch: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    input: {
+        flex: 1,
+        height: 40,
+        borderWidth: 1,
+        borderColor: '#cccccc',
+        borderRadius: 55,
+        paddingHorizontal: 10,
+        marginRight: 10,
+    },
+    searchButton: {
+        backgroundColor: '#3498db',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 55,
+    },
+    searchButtonText: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
 });
 

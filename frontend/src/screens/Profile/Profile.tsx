@@ -40,11 +40,22 @@ const ProfilePage = () => {
     }
 
     const [data, setJobData] = useState([]);
+    const [applied, setAppliedData] = useState([]);
 
     useEffect(() => {
         axios.get(`${Config.backendURL}/jobs/getFiltered/` + userEmail)
             .then(response => {
                 setJobData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching job data:', error);
+            });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`${Config.backendURL}/applied/getFiltered/` + userEmail)
+            .then(response => {
+                setAppliedData(response.data);
             })
             .catch(error => {
                 console.error('Error fetching job data:', error);
@@ -68,7 +79,7 @@ const ProfilePage = () => {
                     <Text style={styles.pageSubTitle}>{userEmail}</Text>
                 </TouchableOpacity>
                 <View style={styles.infoCard}>
-                    <Text style={styles.infoText}>Applied Jobs: 0</Text>
+                    <Text style={styles.infoText}>Applied Jobs: {applied.length}</Text>
                     <Text style={styles.separator}></Text>
                     <Text style={styles.infoText}>Posted Jobs: {data.length}</Text>
                 </View>
