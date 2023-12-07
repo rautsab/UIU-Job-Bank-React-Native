@@ -36,7 +36,7 @@ export class CvService {
 
     async getSingleInfo(email: string) {
         try {
-            const jobs = await this.cvRepository.findOne({ where: { email } });
+            const jobs = await this.cvRepository.findOne({where: {email}});
             console.log(jobs);
             return jobs; // Return the jobs data
         } catch (error) {
@@ -45,4 +45,18 @@ export class CvService {
         }
     }
 
+    async delete(email: string) {
+        try {
+            const entityToDelete = await this.cvRepository.findOne({where: {email}});
+
+            if (!entityToDelete) {
+                return false;
+            }
+
+            await this.cvRepository.remove(entityToDelete);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
 }

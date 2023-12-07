@@ -23,6 +23,7 @@ const AddCV = () => {
     const [experience, setExperience] = useState(['']);
     const [skills, setSkills] = useState(['']);
     const [languages, setLanguages] = useState(['']);
+    const [imageUri, setImageUri] = useState(''); // State to store the image URI
 
 
     function updateCV() {
@@ -41,7 +42,8 @@ const AddCV = () => {
         console.log(cvData);
         axios.post('http://192.168.0.179:3000/cv/insert', cvData)
             .then(response => {
-                console.log('CV data sent successfully:', response.data);
+                alert('CV created successfully');
+                navigation.navigate("Profile");
             })
             .catch(error => {
                 console.error('Error sending CV data:', error);
@@ -86,22 +88,18 @@ const AddCV = () => {
         }
     };
 
-    // @ts-ignore
-    // @ts-ignore
+
     return (
         <ScrollView style={styles.container}>
-            {/* Header */}
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.headerText}>
                     <Text style={styles.pageTitle}>Add CV Information</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    {/* Placeholder image */}
                     <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
 
-            {/* Personal Information */}
             <Text style={styles.sectionTitle}>Personal Information</Text>
             <AppTextInput
                 placeholder="First Name"
@@ -115,6 +113,7 @@ const AddCV = () => {
             />
             <AppTextInput
                 placeholder="Email"
+                // @ts-ignore
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 editable={false}
@@ -137,7 +136,6 @@ const AddCV = () => {
                 onChangeText={(text) => setSummary(text)}
             />
 
-            {/* Education */}
             <Text style={styles.sectionTitle}>Education</Text>
             {education.map((edu, index) => (
                 <View key={index} style={styles.inputGroup}>
@@ -227,7 +225,6 @@ const AddCV = () => {
             </TouchableOpacity>
 
 
-            {/* Save button */}
             <TouchableOpacity
                 style={styles.saveButton}
                 onPress={updateCV}
@@ -300,17 +297,27 @@ const styles = StyleSheet.create({
     },
 
     saveButton: {
-        backgroundColor: '#2196F3', // Blue color (you can change it as per your preference)
+        backgroundColor: '#2196F3',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
         marginTop: 20,
-        marginBottom: 55, // Increased margin bottom for space
+        marginBottom: 55,
     },
     saveButtonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+    }, imageContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+    },
+    selectedImage: {
+        width: 200,
+        height: 200,
+        resizeMode: 'cover',
+        borderRadius: 10,
     },
 });
 

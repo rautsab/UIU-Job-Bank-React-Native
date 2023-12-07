@@ -3,21 +3,22 @@ import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
+import Config from "../../config/config";
 
 const ProfilePage = () => {
     const navigation = useNavigation();
     const {updateLoginState} = useContext(AuthContext);
 
-    const handleEditProfile = () => {
-        axios.get('http://192.168.0.179:3000/cv/' + userEmail).then(res => {
+    const handleAddCV = () => {
+        axios.get(`${Config.backendURL}/cv/` + userEmail).then(res => {
             if (res.data == true) alert("You have already created a CV");
             else navigation.navigate("AddCV");
         })
     };
 
-    const handleSettings = () => {
-        axios.get('http://192.168.0.179:3000/cv/' + userEmail).then(res => {
-            if (res.data != true) alert("You have already created a CV");
+    const handleViewCV = () => {
+        axios.get(`${Config.backendURL}/cv/` + userEmail).then(res => {
+            if (res.data != true) alert("You haven't created a CV yet");
             else navigation.navigate("ViewCV");
         })
     };
@@ -41,9 +42,9 @@ const ProfilePage = () => {
     const [data, setJobData] = useState([]);
 
     useEffect(() => {
-        axios.get('http://192.168.0.179:3000/jobs')
+        axios.get(`${Config.backendURL}/jobs/getFiltered/` + userEmail)
             .then(response => {
-                setJobData(response.data); // Assuming the response.data is an array of jobs
+                setJobData(response.data);
             })
             .catch(error => {
                 console.error('Error fetching job data:', error);
@@ -58,7 +59,7 @@ const ProfilePage = () => {
         <View style={styles.container}>
             <View style={styles.profileHeader}>
                 <View style={styles.profileImageContainer}>
-                    <Image source={require('../../assets/images/profile.jpg')} style={styles.profileImage}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.profileImage}/>
                 </View>
                 <TouchableOpacity style={styles.headerText}>
                     <Text style={styles.pageTitle}>{userName}</Text>
@@ -81,11 +82,11 @@ const ProfilePage = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.infoCard}>
-                    <TouchableOpacity onPress={handleEditProfile} style={styles.editProfileButton}>
+                    <TouchableOpacity onPress={handleAddCV} style={styles.editProfileButton}>
                         <Text style={styles.buttonText}>Add CV</Text>
                     </TouchableOpacity>
                     <Text style={styles.separator}></Text>
-                    <TouchableOpacity onPress={handleSettings} style={styles.settingsButton}>
+                    <TouchableOpacity onPress={handleViewCV} style={styles.settingsButton}>
                         <Text style={styles.buttonText}>View CV</Text>
                     </TouchableOpacity>
                 </View>

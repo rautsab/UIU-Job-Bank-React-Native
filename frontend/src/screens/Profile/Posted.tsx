@@ -1,33 +1,9 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
-
-const data = [
-    {
-        id: '1',
-        title: 'Software Engineer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    },
-    {
-        id: '2',
-        title: 'Product Manager',
-        company: 'Facebook',
-        location: 'Menlo Park, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image2.jpg',
-    },
-    {
-        id: '3',
-        title: 'AI Developer',
-        company: 'Google',
-        location: 'Mountain View, CA',
-        status: 'Full Time',
-        image: 'https://example.com/image.jpg',
-    }
-];
+import axios from "axios";
+import Config from "../../config/config";
+import {AuthContext} from "../../context/AuthContext";
 
 // { route }: { route: any }
 // const JobCard = ({job}: { job: any }) => {
@@ -42,16 +18,17 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
     const navigation = useNavigation();
 
     const handlePress = () => {
-        console.log(`Pressed job with id: ${job.id}`);
-        navigation.navigate("JobSingleView");
+        let job_id = job.id;
+        // @ts-ignore
+        navigation.navigate("JobSingleView", {job_id});
     };
 
     return (
         <TouchableOpacity onPress={handlePress} style={styles.card}>
             <Image source={require('../../assets/images/uiujbc.png')} style={styles.image}/>
             <View style={styles.textContainer}>
-                <Text style={styles.title}>{job.title}</Text>
-                <Text style={styles.company}>{job.company}</Text>
+                <Text style={styles.title}>{job.jobTitle}</Text>
+                <Text style={styles.company}>{job.companyTitle}</Text>
                 <Text style={styles.location}>{job.location}</Text>
                 <Text style={styles.status}>{job.status}</Text>
             </View>
@@ -60,6 +37,19 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 };
 const PostedScreen = () => {
     const navigation = useNavigation();
+    const [data, setJobData] = useState([]);
+    const {userEmail} = useContext(AuthContext);
+
+
+    useEffect(() => {
+        axios.get(`${Config.backendURL}/jobs/getFiltered/` + userEmail)
+            .then(response => {
+                setJobData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching job data:', error);
+            });
+    }, []);
     const renderItem = ({item}: { item: any }) => <JobCard job={item} onPress={() => handlePress(item.id)}/>;
 
     const handlePress = (id: any) => {

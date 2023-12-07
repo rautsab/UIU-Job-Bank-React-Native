@@ -16,6 +16,16 @@ const ViewCV = () => {
         navigation.navigate('Posting');
     };
 
+    const handleDelete = () => {
+        console.log(userEmail);
+        axios.get('http://192.168.0.179:3000/cv/delete/' + userEmail).then(res => {
+            if (res.data == true) {
+                alert("CV deleted successfully");
+                navigation.navigate("Profile");
+            } else alert("Try again");
+        })
+    };
+
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -111,7 +121,7 @@ const ViewCV = () => {
 
 
             <TouchableOpacity style={styles.deleteButton} onPress={update_job}>
-                <Text style={styles.deleteButtonText}>Delete</Text>
+                <Text style={styles.deleteButtonText} onPress={handleDelete}>Delete</Text>
             </TouchableOpacity>
         </ScrollView>
     );
@@ -180,13 +190,13 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.3,
         shadowRadius: 3,
-        marginBottom:70
+        marginBottom: 70
     },
     deleteButtonText: {
         fontFamily: 'Arial',
         color: '#FFFFFF',
         textAlign: 'center',
-        fontSize:20
+        fontSize: 20
     },
 });
 

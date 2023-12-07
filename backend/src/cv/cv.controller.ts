@@ -8,8 +8,12 @@ export class CvController {
     constructor(private readonly cvService: CvService) {
     }
 
+    @Get('delete/:email')
+    async delete(@Param('email') email: string): Promise<boolean> {
+        return await this.cvService.delete(email);
+    }
     @Get('email/:email')
-    async getAllJobs(@Param('email') email: string): Promise<CV> {
+    async getOneCV(@Param('email') email: string): Promise<CV> {
         return await this.cvService.getSingleInfo(email);
     }
 

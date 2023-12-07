@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View, Text, Image, TouchableOpacity, Button} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios/index";
+import Config from "../../config/config";
 
 interface JobCardProps {
     job: any; // Adjust 'any' to the specific type of job object you're using
@@ -14,7 +15,7 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 
     const handlePress = () => {
         let jobId = job.id;
-        console.log(`Pressed job with id: `+ jobId);
+        console.log(`Pressed job with id: ` + jobId);
         navigation.navigate("JobSingleView", {jobId});
     };
 
@@ -37,7 +38,7 @@ const JobViews = () => {
 
     useEffect(() => {
         // Fetch job data from the backend when the component mounts
-        axios.get('http://192.168.0.179:3000/jobs')
+        axios.get(`${Config.backendURL}/jobs`)
             .then(response => {
                 setJobData(response.data); // Assuming the response.data is an array of jobs
             })
@@ -63,7 +64,7 @@ const JobViews = () => {
                     <Text style={styles.pageTitle}>Job Information</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
             <FlatList

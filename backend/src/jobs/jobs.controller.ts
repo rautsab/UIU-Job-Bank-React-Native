@@ -1,6 +1,7 @@
 import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {JobService} from "./jobs.service";
 import {JobDTO} from "../dto/job.dto";
+import {Jobs} from "../../models/job.model";
 
 @Controller('jobs')
 export class JobsController {
@@ -16,6 +17,12 @@ export class JobsController {
     async getAllJobs(): Promise<any[]> {
         return await this.jobService.getAll();
     }
+
+    @Get('getFiltered/:email') // Assuming you're fetching filtered jobs by email
+    async getAllJobsFiltered(@Param('email') email: string): Promise<Jobs[]> {
+        return await this.jobService.getAllFiltered(email); // Pass 'email' to your service
+    }
+
 
     @Post('insert') // Assuming you're fetching a user by ID
     insertJob(@Body() jobDTO : JobDTO): any {

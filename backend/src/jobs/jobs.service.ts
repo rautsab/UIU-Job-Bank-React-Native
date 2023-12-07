@@ -48,4 +48,7 @@ export class JobService {
         }
     }
 
+    async getAllFiltered(author_email: string): Promise<Jobs[]> {
+        return await this.jobsRepository.find({where: {author_email}});
+    }
 }

@@ -17,6 +17,7 @@ import Font from "../../constants/Font";
 import AppTextInput from "../../components/AppTextInput";
 import axios from "axios/index";
 import {useNavigation} from "@react-navigation/native";
+import Config from "../../config/config";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Register">;
 
@@ -32,21 +33,29 @@ const RegisterScreen: React.FC<Props> = ({navigation: {navigate}}) => {
         console.log(name.toString());
         console.log(email.toString());
         console.log(password.toString());
-        axios.post('http://192.168.0.181:3000/user/register', {
-            name: password.toString(),
-            email: email.toString(),
-            password: password.toString(),
+        axios.get(`${Config.backendURL}/user/get/` + email).then(res => {
+            console.log(res.data);
+            if (res.data == "Not Found") {
+                axios.post(`${Config.backendURL}/user/register`, {
+                    name: password.toString(),
+                    email: email.toString(),
+                    password: password.toString(),
+                })
+                    .then((response) => {
+                        if (response.data == true) {
+                            alert("Account created successfully");
+                            navigation.navigate("Login");
+                        } else {
+                            console.log('POST decline!', response.data);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error making POST request:', error);
+                    });
+            } else {
+                alert("You have already an account with this email!");
+            }
         })
-            .then((response) => {
-                if (response.data == true) {
-                    alert("Account created successfully");
-                } else {
-                    console.log('POST decline!', response.data);
-                }
-            })
-            .catch((error) => {
-                console.error('Error making POST request:', error);
-            });
 
     }
 

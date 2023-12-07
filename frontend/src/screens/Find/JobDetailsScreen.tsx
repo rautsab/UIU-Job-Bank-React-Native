@@ -1,18 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Modal, ActivityIndicator} from 'react-native';
 import {useNavigation, useRoute} from "@react-navigation/native";
 import axios from "axios";
+import Config from "../../config/config";
+import {AuthContext} from "../../context/AuthContext";
+import config from "../../config/config";
 
-const JobDetailsScreen = ({ route }: { route: any }) => {
+const JobDetailsScreen = ({route}: { route: any }) => {
+    const {userEmail} = useContext(AuthContext);
     const navigation = useNavigation();
     const [loading, setLoading] = useState(true);
     const [jobDetails, setJobDetails] = useState<any>(null);
-    const { jobId } = route.params;
+    const {jobId} = route.params;
 
     useEffect(() => {
         const fetchJobDetails = async () => {
             try {
-                const response = await axios.get(`http://192.168.0.179:3000/jobs/${jobId}`);
+                const response = await axios.get(`${Config.backendURL}/jobs/${jobId}`);
                 setJobDetails(response.data);
             } catch (error) {
                 console.error('Error fetching job details:', error);
@@ -29,7 +33,15 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
     };
 
     if (loading) {
-        return <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />;
+        return <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator}/>;
+    }
+
+    const handleApplyNow = () => {
+        axios.get(`${Config.backendURL}/cv/` + userEmail).then(res => {
+            if (res.data == true) alert("Applied Successfully!");
+            else alert("You have to create a CV info to apply!");
+        });
+        console.log("handle apply now");
     }
 
     return (
@@ -39,7 +51,7 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
                     <Text style={styles.pageTitle}>Job Information</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
             <View style={styles.header}>
@@ -61,7 +73,7 @@ const JobDetailsScreen = ({ route }: { route: any }) => {
                     <Text style={styles.saveButtonText}>Save Job</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.applyButton}>
-                    <Text style={styles.applyButtonText}>Apply Now</Text>
+                    <Text style={styles.applyButtonText} onPress={handleApplyNow}>Apply Now</Text>
                 </TouchableOpacity>
             </View>
 

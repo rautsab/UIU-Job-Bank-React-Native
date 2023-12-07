@@ -85,11 +85,13 @@ export class UserService {
     }
 
     async find(email: string) {
+        console.log("called name");
         try {
             const user = await this.userRepository.findOne({where: {email}});
+            console.log(user.name);
             return user.name;
         } catch (error) {
-            throw new NotFoundException('User not found');
+            return "Not Found";
         }
     }
 }
