@@ -1,13 +1,11 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
-import CustomTextInput from '../../components/AppTextInput';
 import AppTextInput from "../../components/AppTextInput";
 import Font from "../../constants/Font";
 import Colors from "../../constants/Colors";
 import FontSize from "../../constants/FontSize";
 import Spacing from "../../constants/Spacing";
 import {useNavigation} from "@react-navigation/native";
-import {exp} from "@gorhom/bottom-sheet/lib/typescript/utilities/easingExp";
 import axios from "axios/index";
 import {AuthContext} from "../../context/AuthContext"; // Import your CustomTextInput component
 
@@ -55,6 +53,7 @@ const JobPostingForm = () => {
             .then((response) => {
                 if (response.data == true) {
                     console.log('', response.data);
+                    alert("Posted");
                 } else {
                     console.log('POST decline!', response.data);
                 }

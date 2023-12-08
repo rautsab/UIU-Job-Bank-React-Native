@@ -5,6 +5,9 @@ import axios from "axios";
 import Config from "../../config/config";
 import {AuthContext} from "../../context/AuthContext";
 
+// { route }: { route: any }
+// const JobCard = ({job}: { job: any }) => {
+
 interface JobCardProps {
     job: any; // Adjust 'any' to the specific type of job object you're using
     onPress: () => void;
@@ -15,15 +18,17 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
     const navigation = useNavigation();
 
     const handlePress = () => {
-        console.log(`Pressed job with id: ${job.id}`);
+        let job_id = job.id;
+        // @ts-ignore
+        navigation.navigate("JobSingleView", {job_id});
     };
 
     return (
         <TouchableOpacity onPress={handlePress} style={styles.card}>
             <Image source={require('../../assets/images/uiujbc.png')} style={styles.image}/>
             <View style={styles.textContainer}>
-                <Text style={styles.title}>{job.title}</Text>
-                <Text style={styles.company}>{job.company}</Text>
+                <Text style={styles.title}>{job.jobTitle}</Text>
+                <Text style={styles.company}>{job.companyTitle}</Text>
                 <Text style={styles.location}>{job.location}</Text>
                 <Text style={styles.status}>{job.status}</Text>
             </View>
@@ -32,21 +37,45 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 };
 const AppliedScreen = () => {
     const navigation = useNavigation();
-    const [applied, setAppliedData] = useState([]);
-
+    const [data, setJobData] = useState([]);
     const {userEmail} = useContext(AuthContext);
+
+
+    // useEffect(() => {
+    //     axios.get(`${Config.backendURL}/jobs/getFiltered/` + userEmail)
+    //         .then(response => {
+    //             setJobData(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching job data:', error);
+    //         });
+    // }, []);
+
 
     useEffect(() => {
         axios.get(`${Config.backendURL}/applied/getFiltered/` + userEmail)
-            .then(response => {
-                setAppliedData(response.data);
+            .then(async response => {
+                const jobDataArray = []; // Array to store fetched job data
+                for (const item of response.data) {
+                    try {
+                        const jobResponse = await axios.get(`${Config.backendURL}/jobs/${item.job_id}`);
+                        jobDataArray.push(jobResponse.data);
+                    } catch (error) {
+                        console.error(`Error fetching additional data for ID ${item.id}:`, error);
+                    }
+                    // Introduce a delay (for example, 500 milliseconds) before the next API call
+                    // await new Promise(resolve => setTimeout(resolve, 500));
+                }
+                // @ts-ignore
+                setJobData(jobDataArray);
             })
             .catch(error => {
                 console.error('Error fetching job data:', error);
             });
     }, []);
 
-    console.log(applied);
+
+    console.log(data[0]);
     const renderItem = ({item}: { item: any }) => <JobCard job={item} onPress={() => handlePress(item.id)}/>;
 
     const handlePress = (id: any) => {
@@ -65,11 +94,11 @@ const AppliedScreen = () => {
                     <Text style={styles.pageTitle}>Applied Jobs</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
             <FlatList
-                data={applied}
+                data={data}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.flatListContent}

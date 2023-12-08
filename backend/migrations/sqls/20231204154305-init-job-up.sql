@@ -11,9 +11,9 @@ CREATE TABLE jobs
     "gender"           VARCHAR(255) NOT NULL,
     "skills"           VARCHAR(255) NOT NULL,
     "deadline"         VARCHAR(255) NOT NULL,
-    "academic"         VARCHAR(255) NOT NULL,
-    "responsibilities" VARCHAR(255) NOT NULL,
-    "description"      VARCHAR(255) NOT NULL,
+    "academic"         TEXT,
+    "responsibilities" TEXT,
+    "description"      TEXT,
     "published_date"   DATE DEFAULT CURRENT_DATE,
     "author_email"     VARCHAR(255);
 );

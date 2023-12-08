@@ -68,7 +68,7 @@ const PostedScreen = () => {
                     <Text style={styles.pageTitle}>Posted Jobs</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
             <FlatList

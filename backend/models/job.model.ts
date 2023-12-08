@@ -35,13 +35,13 @@ export class Jobs {
     @Column('varchar', {length: 255, name: 'deadline', nullable: false})
     readonly deadline: string;
 
-    @Column('varchar', {length: 255, name: 'academic', nullable: false})
+    @Column('text', {name: 'academic', nullable: false})
     readonly academic: string;
 
-    @Column('varchar', {length: 255, name: 'responsibilities', nullable: false})
+    @Column('text', {name: 'responsibilities', nullable: false})
     readonly responsibilities: string;
 
-    @Column('varchar', {length: 255, name: 'description', nullable: false})
+    @Column('text', {name: 'description', nullable: false})
     readonly description: string;
 
     @Column('date', { name: 'published_date', default: () => 'CURRENT_DATE' })

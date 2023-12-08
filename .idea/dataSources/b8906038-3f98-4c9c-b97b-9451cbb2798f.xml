@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.49">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>904</IntrospectionStateNumber>
+      <IntrospectionStateNumber>918</IntrospectionStateNumber>
       <ServerVersion>15.5</ServerVersion>
       <StartupTime>1701782555</StartupTime>
       <TimeZones>true ACDT
@@ -800,17 +800,17 @@ false Zulu
 13471||10|C|G
 13471||-9223372036854775808|U|G
 13471||10|U|G</Grants>
-      <IntrospectionStateNumber>904</IntrospectionStateNumber>
+      <IntrospectionStateNumber>918</IntrospectionStateNumber>
       <ObjectId>16405</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
-    <database id="3" parent="1" name="database_name">
-      <ObjectId>16391</ObjectId>
-      <OwnerName>redwanahmedutsab</OwnerName>
-    </database>
-    <database id="4" parent="1" name="postgres">
+    <database id="3" parent="1" name="postgres">
       <Comment>default administrative connection database</Comment>
       <ObjectId>5</ObjectId>
+      <OwnerName>redwanahmedutsab</OwnerName>
+    </database>
+    <database id="4" parent="1" name="database_name">
+      <ObjectId>16391</ObjectId>
       <OwnerName>redwanahmedutsab</OwnerName>
     </database>
     <role id="5" parent="1" name="pg_checkpoint">
@@ -4229,9 +4229,9 @@ false Zulu
     <schema id="264" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>904</IntrospectionStateNumber>
-      <IntrospectionTimestamp>2023-12-07.15:05:41.802</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2023-12-07.09:05:42</LocalIntrospectionTimestamp>
+      <IntrospectionStateNumber>918</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2023-12-08.15:26:41.868</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2023-12-08.09:26:42</LocalIntrospectionTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>517</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -4239,7 +4239,7 @@ false Zulu
     <sequence id="265" parent="264" name="applied_id_seq">
       <DasType>integer|0s</DasType>
       <ObjectId>16524</ObjectId>
-      <SequenceIdentity>1(1)</SequenceIdentity>
+      <SequenceIdentity>1(10)</SequenceIdentity>
       <StartValue>1</StartValue>
       <StateNumber>902</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4255,7 +4255,7 @@ false Zulu
     <sequence id="267" parent="264" name="jobs_id_seq">
       <DasType>integer|0s</DasType>
       <ObjectId>16497</ObjectId>
-      <SequenceIdentity>1(13)</SequenceIdentity>
+      <SequenceIdentity>1(16)</SequenceIdentity>
       <StartValue>1</StartValue>
       <StateNumber>850</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4271,7 +4271,7 @@ false Zulu
     <sequence id="269" parent="264" name="users_id_seq">
       <DasType>integer|0s</DasType>
       <ObjectId>16469</ObjectId>
-      <SequenceIdentity>1(24)</SequenceIdentity>
+      <SequenceIdentity>1(26)</SequenceIdentity>
       <StartValue>1</StartValue>
       <StateNumber>817</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4510,25 +4510,25 @@ false Zulu
       <TypeId>1043</TypeId>
     </column>
     <column id="304" parent="272" name="academic">
-      <DasType>varchar(255)|0s</DasType>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>12</Position>
-      <StateNumber>850</StateNumber>
-      <TypeId>1043</TypeId>
+      <StateNumber>917</StateNumber>
+      <TypeId>25</TypeId>
     </column>
     <column id="305" parent="272" name="responsibilities">
-      <DasType>varchar(255)|0s</DasType>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
-      <StateNumber>850</StateNumber>
-      <TypeId>1043</TypeId>
+      <StateNumber>917</StateNumber>
+      <TypeId>25</TypeId>
     </column>
     <column id="306" parent="272" name="description">
-      <DasType>varchar(255)|0s</DasType>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>14</Position>
-      <StateNumber>850</StateNumber>
-      <TypeId>1043</TypeId>
+      <StateNumber>917</StateNumber>
+      <TypeId>25</TypeId>
     </column>
     <column id="307" parent="272" name="published_date">
       <DasType>date|0s</DasType>

@@ -96,7 +96,7 @@ const AddCV = () => {
                     <Text style={styles.pageTitle}>Add CV Information</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
 
