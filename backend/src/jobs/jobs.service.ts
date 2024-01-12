@@ -49,25 +49,29 @@ export class JobService {
     // }
 
     async getAll(searchQuery?: string): Promise<any[]> {
-        console.log(searchQuery);
+        console.log('Received searchQuery:', searchQuery);
+
         try {
             let jobs;
 
-            if (searchQuery != "all") {
+            if (searchQuery && searchQuery !== "all") {
                 jobs = await this.jobsRepository.find({
                     where: {
-                        jobTitle: Like(`%${searchQuery}%`), // Example: Searching by job title
-                        // Add more criteria as needed for other fields
+                        jobTitle: Like(`%${searchQuery}%`),
+                        // Add more criteria for other fields if needed
                     },
                 });
+                console.log('Filtered jobs:', jobs);
+                console.log('Search success');
             } else {
-                jobs = await this.jobsRepository.find(); // Fetch all jobs if no search query
+                jobs = await this.jobsRepository.find();
+                console.log('All jobs fetched');
             }
 
-            return jobs; // Return the array of filtered jobs or all jobs
+            return jobs;
         } catch (error) {
             console.error('Error occurred while fetching jobs:', error);
-            return []; // Return an empty array in case of an error
+            return [];
         }
     }
 

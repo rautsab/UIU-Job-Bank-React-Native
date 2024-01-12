@@ -4,6 +4,7 @@ import {useNavigation} from "@react-navigation/native";
 import AppTextInput from "../../components/AppTextInput";
 import axios from "axios/index";
 import {AuthContext} from "../../context/AuthContext";
+import Config from "../../config/config";
 
 const AddCV = () => {
     const navigation = useNavigation();
@@ -23,8 +24,6 @@ const AddCV = () => {
     const [experience, setExperience] = useState(['']);
     const [skills, setSkills] = useState(['']);
     const [languages, setLanguages] = useState(['']);
-    const [imageUri, setImageUri] = useState(''); // State to store the image URI
-
 
     function updateCV() {
         const cvData = {
@@ -40,7 +39,7 @@ const AddCV = () => {
             languages,
         };
         console.log(cvData);
-        axios.post('http://192.168.0.179:3000/cv/insert', cvData)
+        axios.post(`${Config.backendURL}/cv/insert`, cvData)
             .then(response => {
                 alert('CV created successfully');
                 navigation.navigate("Profile");

@@ -41,4 +41,9 @@ export class AppliedService {
         console.log(user_email);
         return await this.appliedRepository.find({where: {user_email}});
     }
+
+    async getSingle(job_id: number): Promise<Applied[]> {
+        console.log("called form backend " + job_id);
+        return await this.appliedRepository.find({where: {job_id}});
+    }
 }

@@ -94,11 +94,11 @@ const ProfilePage = () => {
                 </View>
                 <View style={styles.infoCard}>
                     <TouchableOpacity onPress={handleAddCV} style={styles.editProfileButton}>
-                        <Text style={styles.buttonText}>Add CV</Text>
+                        <Text style={styles.buttonText}>Add Curriculum Vitae</Text>
                     </TouchableOpacity>
                     <Text style={styles.separator}></Text>
                     <TouchableOpacity onPress={handleViewCV} style={styles.settingsButton}>
-                        <Text style={styles.buttonText}>View CV</Text>
+                        <Text style={styles.buttonText}>View Curriculum Vitae</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.infoCard}>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         borderRadius: 75,
     },
     viewJobButton: {
-        backgroundColor: '#3498db',
+        backgroundColor: 'white',
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderRadius: 20,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 
     },
     appliedJobButton: {
-        backgroundColor: '#2ecc71',
+        backgroundColor: '#fff',
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderRadius: 20,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
     },
     editProfileButton: {
-        backgroundColor: '#cbd64f',
+        backgroundColor: '#fff',
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderRadius: 20,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 
     },
     settingsButton: {
-        backgroundColor: '#c2733a',
+        backgroundColor: '#fff',
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderRadius: 20,
@@ -169,9 +169,10 @@ const styles = StyleSheet.create({
 
     },
     buttonText: {
-        color: '#fff',
+        color: '#000',
         fontWeight: 'bold',
         textAlign: 'center',
+        fontSize:15
     },
     infoCard: {
         marginTop: 5,
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
     },
     logoutButton: {
-        backgroundColor: '#e74c3c',
+        backgroundColor: '#fff',
         paddingVertical: 15,
         paddingHorizontal: 40,
         borderRadius: 25,

@@ -18,9 +18,10 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
     const navigation = useNavigation();
 
     const handlePress = () => {
-        let job_id = job.id;
-        // @ts-ignore
-        navigation.navigate("JobSingleView", {job_id});
+        let jobId = job.id;
+        console.log(`Pressed job with id: ` + jobId);
+        console.log("clicked");
+        navigation.navigate("ViewApplication", {jobId});
     };
 
     return (
@@ -32,6 +33,9 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
                 <Text style={styles.location}>{job.location}</Text>
                 <Text style={styles.status}>{job.status}</Text>
             </View>
+            <TouchableOpacity>
+                <Text style={styles.helloContainer} onPress={handlePress}>View Applications</Text>
+            </TouchableOpacity>
         </TouchableOpacity>
     );
 };
@@ -152,7 +156,11 @@ const styles = StyleSheet.create({
         marginLeft: 0,
         marginTop: 10,
         marginBottom: 10
-    },
+    }, helloContainer: {
+        marginTop:70,
+        fontSize:13,
+        fontWeight:"bold"
+    }
 });
 
 export default PostedScreen;

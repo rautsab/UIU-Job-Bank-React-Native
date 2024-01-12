@@ -9,6 +9,11 @@ export class AppliedController {
     constructor(private readonly appliedService: AppliedService) {
     }
 
+    @Get(':id') // Assuming you're fetching a user by ID
+    async getUserById(@Param('id') id: number): Promise<Applied[]> {
+        return await this.appliedService.getSingle(id);
+    }
+
     @Post('insert')
     getUser(@Body() appliedDTO: AppliedDTO): Promise<boolean> {
         return this.appliedService.insert(appliedDTO);

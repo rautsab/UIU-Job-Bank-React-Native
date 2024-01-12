@@ -18,6 +18,11 @@ export class UserController {
         return this.userService.userAuth(userCredential);
     }
 
+    @Post('send_code')
+    async sendCode(@Body('email') email: string): Promise<any> {
+        return this.userService.send(email);
+    }
+
     @Post('register')
     userRegister(@Body() createUserDTO: CreateUserDTO): any {
         return this.userService.createUser(createUserDTO);

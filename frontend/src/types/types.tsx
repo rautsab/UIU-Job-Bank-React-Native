@@ -13,6 +13,7 @@ export type RootStackParamList = {
     Welcome: undefined;
     Login: undefined;
     Register: undefined;
+    Validation: { email: string, name: string, password: string };
 
     //find job
     JobViews: undefined;
@@ -36,6 +37,7 @@ export type RootStackParamList = {
     Posted: undefined;
     AddCV: undefined;
     ViewCV: undefined;
+    ViewApplication: { jobId: string };
 
     //function for profile
     Listing: undefined;

@@ -44,7 +44,7 @@ const JobViews = () => {
             .catch(error => {
                 console.error('Error fetching job data:', error);
             });
-    }, []); // Empty dependen
+    }, []);
     const renderItem = ({item}: { item: any }) => <JobCard job={item} onPress={() => handlePress(item.id)}/>;
 
     const handlePress = (id: any) => {
@@ -74,6 +74,7 @@ const JobViews = () => {
     };
 
     const handleSearch = () => {
+        console.log(searchText);
         if (searchText == "") {
             axios.get(`${Config.backendURL}/jobs/query/all`)
                 .then(response => {
@@ -179,6 +180,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         padding: 10,
         backgroundColor: '#ffffff',
+        marginBottom:55
     }, headerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',

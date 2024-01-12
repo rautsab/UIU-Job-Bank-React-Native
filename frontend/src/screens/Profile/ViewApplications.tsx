@@ -25,34 +25,37 @@ const JobCard: React.FC<JobCardProps> = ({job, onPress}) => {
 
     return (
         <TouchableOpacity onPress={handlePress} style={styles.card}>
-            <Image source={require('../../assets/images/uiujbc.png')} style={styles.image}/>
+            <Image source={require('../../assets/images/profile.png')} style={styles.image}/>
             <View style={styles.textContainer}>
-                <Text style={styles.title}>{job.jobTitle}</Text>
-                <Text style={styles.company}>{job.companyTitle}</Text>
-                <Text style={styles.location}>{job.location}</Text>
-                <Text style={styles.status}>{job.status}</Text>
+                <Text style={styles.title}>{job.firstname + " " + job.lastname}</Text>
+                <Text style={styles.company}>{job.email}</Text>
+                <Text style={styles.status}>{job.phone}</Text>
+                <Text style={styles.location}>{job.address}</Text>
             </View>
         </TouchableOpacity>
     );
 };
-const AppliedScreen = () => {
+const ViewApplicants = ({route}: { route: any }) => {
     const navigation = useNavigation();
     const [data, setJobData] = useState([]);
     const {userEmail} = useContext(AuthContext);
+    const {jobId} = route.params;
+
+    console.log(jobId);
 
     useEffect(() => {
-        axios.get(`${Config.backendURL}/applied/getFiltered/` + userEmail)
+        axios.get(`${Config.backendURL}/applied/` + jobId)
             .then(async response => {
+                console.log(response.data);
                 const jobDataArray = []; // Array to store fetched job data
                 for (const item of response.data) {
                     try {
-                        const jobResponse = await axios.get(`${Config.backendURL}/jobs/${item.job_id}`);
+                        const jobResponse = await axios.get(`${Config.backendURL}/cv/email/${item.user_email}`)
+                        ;
                         jobDataArray.push(jobResponse.data);
                     } catch (error) {
                         console.error(`Error fetching additional data for ID ${item.id}:`, error);
                     }
-                    // Introduce a delay (for example, 500 milliseconds) before the next API call
-                    // await new Promise(resolve => setTimeout(resolve, 500));
                 }
                 // @ts-ignore
                 setJobData(jobDataArray);
@@ -77,7 +80,7 @@ const AppliedScreen = () => {
         <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <TouchableOpacity style={styles.headerText}>
-                    <Text style={styles.pageTitle}>Applied Jobs</Text>
+                    <Text style={styles.pageTitle}>Applicants</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
                     <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
@@ -167,4 +170,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AppliedScreen;
+export default ViewApplicants;

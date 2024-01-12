@@ -1,97 +1,3 @@
-// import {DefaultTheme, NavigationContainer} from "@react-navigation/native";
-// import {createNativeStackNavigator} from "@react-navigation/native-stack";
-// import * as React from "react";
-// import Colors from "../constants/Colors";
-// import LoginScreen from "../screens/LoginScreen";
-// import RegisterScreen from "../screens/RegisterScreen";
-// import Welcome from "../screens/WelcomeScreen";
-//
-// import {RootStackParamList} from "../types/types_of_stack";
-// import JobDetailsScreen from "../screens/JobSingleDetails";
-// import JobViewsScreen from "../screens/JobInformationScreen";
-// import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-// import JobSingleDetails from "../screens/JobSingleDetails";
-// import JobViews from "../screens/JobInformationScreen";
-//
-// const theme = {
-//     ...DefaultTheme,
-//     colors: {
-//         ...DefaultTheme.colors,
-//         background: Colors.background,
-//     },
-// };
-//
-// export default function Navigation() {
-//     return (
-//         <NavigationContainer theme={theme}>
-//             <RootNavigator/>
-//         </NavigationContainer>
-//     );
-// }
-//
-// /**
-//  * A root stack navigator is often used for displaying modals on top of all other content.
-//  * https://reactnavigation.org/docs/modal
-//  */
-// const Stack = createNativeStackNavigator<RootStackParamList>();
-// const Tab = createBottomTabNavigator<RootStackParamList>();
-// const Stack_In = createNativeStackNavigator<RootStackParamList>();
-//
-// function Job_Nav() {
-//     return (
-//         <Stack.Navigator
-//             screenOptions={{
-//                 headerShown: false,
-//             }}
-//         >
-//             <Stack.Screen name="JobViews" component={JobViews}/>
-//             <Stack.Screen name="JobSingleView" component={JobSingleDetails}/>
-//         </Stack.Navigator>
-//     );
-// }
-//
-// function JobTabs() {
-//     return (
-//         <Tab.Navigator
-//             screenOptions={{
-//                 headerShown: false,
-//                 tabBarActiveTintColor: Colors.primary,
-//                 tabBarInactiveTintColor: Colors.background,
-//             }}
-//         >
-//             <Tab.Screen
-//                 name="FindTab"
-//                 component={Job_Nav}
-//                 options={{
-//                     tabBarLabel: 'Find Job', // Change this label as per your requirement
-//                 }}
-//             />
-//             <Tab.Screen
-//                 name="PostTab"
-//                 component={JobDetailsScreen}
-//                 options={{
-//                     tabBarLabel: 'Post Tab', // Change this label as per your requirement
-//                 }}
-//             />
-//         </Tab.Navigator>
-//     );
-// }
-//
-// function RootNavigator() {
-//     return (
-//         <Stack.Navigator
-//             screenOptions={{
-//                 headerShown: false,
-//             }}
-//         >
-//             <Stack.Screen name="Welcome" component={Welcome}/>
-//             <Stack.Screen name="Login" component={LoginScreen}/>
-//             <Stack.Screen name="Register" component={RegisterScreen}/>
-//             <Stack.Screen name="JobTabs" component={JobTabs}/>
-//         </Stack.Navigator>
-//     );
-// }
-
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
@@ -112,6 +18,9 @@ import AppliedScreen from "../screens/Profile/Applied";
 import PostedScreen from "../screens/Profile/Posted";
 import ViewCV from "../screens/Profile/ViewCV";
 import AddCV from "../screens/Profile/AddCV";
+import ViewApplications from "../screens/Profile/ViewApplications";
+import Validation from "../screens/Auth/Validation";
+import ValidationScreen from "../screens/Auth/Validation";
 
 const theme = {
     ...DefaultTheme,
@@ -150,6 +59,7 @@ function Profile() {
                 <Stack.Screen name="Posted" component={PostedScreen} />
                 <Stack.Screen name="AddCV" component={AddCV} />
                 <Stack.Screen name="ViewCV" component={ViewCV} />
+                <Stack.Screen name="ViewApplication" component={ViewApplications} />
             </Stack.Navigator>
         );
 }
@@ -216,6 +126,7 @@ function RootNavigator() {
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Validation" component={ValidationScreen} />
             <Stack.Screen
                 name="JobTabs"
                 component={JobTabs}

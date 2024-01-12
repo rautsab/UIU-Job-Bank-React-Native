@@ -7,7 +7,8 @@ import FontSize from "../../constants/FontSize";
 import Spacing from "../../constants/Spacing";
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios/index";
-import {AuthContext} from "../../context/AuthContext"; // Import your CustomTextInput component
+import {AuthContext} from "../../context/AuthContext";
+import Config from "../../config/config"; // Import your CustomTextInput component
 
 const JobPostingForm = () => {
     const {userEmail} = useContext(AuthContext);
@@ -33,7 +34,7 @@ const JobPostingForm = () => {
 
 
     function update_job() {
-        axios.post('http://192.168.0.179:3000/jobs/insert', {
+        axios.post(`${Config.backendURL}/jobs/insert`, {
             jobTitle: jobTitle,
             companyTitle: companyTitle,
             location: location,
@@ -70,7 +71,7 @@ const JobPostingForm = () => {
                     <Text style={styles.pageTitle}>Job Post</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.headerText} onPress={profile}>
-                    <Image source={require('../../assets/images/profile.jpg')} style={styles.circularIcon}/>
+                    <Image source={require('../../assets/images/profile.png')} style={styles.circularIcon}/>
                 </TouchableOpacity>
             </View>
             <Text style={styles.text}>
@@ -234,6 +235,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.3,
         shadowRadius: Spacing,
+        marginBottom: 55
     },
     signInText: {
         fontFamily: Font["poppins-bold"],

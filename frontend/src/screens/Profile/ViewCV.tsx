@@ -8,6 +8,7 @@ import Spacing from '../../constants/Spacing';
 import {useNavigation} from '@react-navigation/native';
 import axios from "axios/index";
 import {AuthContext} from "../../context/AuthContext";
+import Config from "../../config/config";
 
 const ViewCV = () => {
     const navigation = useNavigation();
@@ -18,7 +19,7 @@ const ViewCV = () => {
 
     const handleDelete = () => {
         console.log(userEmail);
-        axios.get('http://192.168.0.179:3000/cv/delete/' + userEmail).then(res => {
+        axios.get(`${Config.backendURL}/cv/delete/` + userEmail).then(res => {
             if (res.data == true) {
                 alert("CV deleted successfully");
                 navigation.navigate("Profile");
@@ -41,7 +42,7 @@ const ViewCV = () => {
 
 
     useEffect(() => {
-        axios.get(`http://192.168.0.179:3000/cv/email/${userEmail}`)
+        axios.get(`${Config.backendURL}/cv/email/${userEmail}`)
             .then(response => {
                 const {data} = response;
                 setFirstName(data.firstname);

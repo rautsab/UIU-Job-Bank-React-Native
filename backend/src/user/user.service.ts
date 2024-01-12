@@ -3,11 +3,16 @@ import {CreateUserDTO, UserCredentialDTO} from '../dto/user.dto';
 import {Users} from "../../models/user.models";
 import {getRepository, Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
+import * as nodemailer from 'nodemailer';
+import {MailerService} from "@nestjs-modules/mailer";
+import {text} from "express";
+
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(Users) private readonly userRepository: Repository<Users>,
+        private readonly mailerService: MailerService, // Inject MailerService
     ) {
     }
 
@@ -94,4 +99,67 @@ export class UserService {
             return "Not Found";
         }
     }
+
+    async send(email: string): Promise<string> {
+        try {
+            const code = this.generateRandomCode();
+            console.log('Generating code:', code);
+
+
+            const mailOptions = {
+                    to: email,
+                    from: "uiujobbank@gmail.com",
+                    subject:
+                        'Your 6-digit verification code',
+                    text:
+                        'Subject: Welcome to UIU Job Bank - Verify Your Email Address\n' +
+                        'Thank you for joining UIU Job Bank! We\'re thrilled to have you on board.\n' +
+                        '\n' +
+                        'To ensure the security of your account and activate your UIU Job Bank membership, please use the following verification code:\n' +
+                        '\n' +
+                        'Verification Code: ' + code +
+                        '\n' +
+                        'Simply enter this code in the verification section on our website to complete the process.\n' +
+                        '\n' +
+                        'If you didn\'t create an account on UIU Job Bank, please disregard this email. Your account will remain inactive.\n' +
+                        '\n' +
+                        'Welcome to the UIU Job Bank community! We look forward to helping you explore exciting job opportunities.\n' +
+                        '\n' +
+                        'Best regards,\n' +
+                        'The UIU Job Bank Team\n', // Create a Handlebars template file named 'verification-code.hbs'
+                    html:
+                        {
+                            code
+                        }
+                    ,
+                }
+            ;
+
+            await this.mailerService.sendMail({
+                to: email,
+                from: "UIU JOB BANK",
+                subject: 'Welcome to UIU Job Bank - Verify Your Email Address',
+                html: `
+                <p>Thank you for joining UIU Job Bank! We're thrilled to have you on board.</p>
+                <p>To ensure the security of your account and activate your UIU Job Bank membership, please use the following verification code:</p>
+                <h3>Verification Code: ${code}</h3>
+                <p>Simply enter this code in the verification section on our website to complete the process.</p>
+                <p>If you didn't create an account on UIU Job Bank, please disregard this email. Your account will remain inactive.</p>
+                <p>Welcome to the UIU Job Bank community! We look forward to helping you explore exciting job opportunities.</p>
+                <p>Best regards,<br>The UIU Job Bank Team</p>
+            `,
+            });
+            console.log('Email sent successfully');
+
+            return code;
+        } catch (error) {
+            console.error('Error sending email:', error);
+            return "";
+        }
+    }
+
+    private generateRandomCode(): string {
+        return String(Math.floor(100000 + Math.random() * 900000)); // Generates a random 6-digit code as a string
+    }
+
 }
